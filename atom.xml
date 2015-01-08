@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[devblog of @sgt_mactavish]]></title>
+  <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
+  <link href="http://brain64bit.github.io/"/>
+  <updated>2015-01-09T00:44:39+07:00</updated>
+  <id>http://brain64bit.github.io/</id>
+  <author>
+    <name><![CDATA[@sgt_mactavish]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Install Rmagick On OSX Yosemite]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/01/08/install-rmagick-on-osx-yosemite/"/>
+    
+    <updated>2015-01-08T23:53:22+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/01/08/install-rmagick-on-osx-yosemite</id>
+    
+    <content type="html"><![CDATA[<p>So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
+The problem exists when bundler try to install rmagick gem and having trouble finding <strong>MagickWand.h</strong> for building native extension.</p>
+
+<pre><code>Can't install RMagick 2.13.2. Can't find MagickWand.h.
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of necessary
+libraries and/or headers.  Check the mkmf.log file for more details.  You may
+need configuration options.
+</code></pre>
+
+<!-- MORE -->
+
+
+<p>This problem can be solved by tell explicitly to rmagick where the path of imagemagick headers file with providing configuration options on gem installation,
+for example like,</p>
+
+<pre><code>gem install rmagick --with-opt-dir=your_path --with-opt-include=your_path
+</code></pre>
+
+<p>But this problem could be solve easily by installing <a href="http://en.wikipedia.org/wiki/Pkg-config">pkgconfig</a> first before installing imagemagick. So now you can install pkgconfig first and reinstall the imagemagick.
+If you&rsquo;re using <strong>Homebrew</strong></p>
+
+<pre><code>brew install pkgconfig
+brew uninstall imagemagick &amp;&amp; brew install imagemagick
+</code></pre>
+
+<p>Now after reinstallation, you can easilly install rmagick gem as usual <strong>gem install rmagick</strong></p>
+]]></content>
+    
+  </entry>
+  
+  <entry>
+    
+    <title type="html"><![CDATA[ruby inject method]]></title>
+    <link href="http://brain64bit.github.io/blog/2014/03/18/ruby-inject-method/"/>
+    
+    <updated>2014-03-18T07:23:14+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2014/03/18/ruby-inject-method</id>
+    
+    <content type="html"><![CDATA[<p>ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
+
+<p>For example inject method useful for accumulation in one dimensional array :</p>
+
+<pre><code>[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
+</code></pre>
+
+<p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
+
+<!-- MORE -->
+
+
+<p>From above example inject method will accumulate all element inside array / collection, which is :</p>
+
+<pre><code>    [1,2,3].inject(0){ |initial_variable, element| element + initial_variable} # =&gt; same as 1+2+3 = 6
+</code></pre>
+
+<p>Another example :</p>
+
+<pre><code>    [2,4,6,8].inject(10){ |initial, element| initial * element } # =&gt; 3840
+</code></pre>
+
+<p>Well, from above example you can simplify the operation process by giving operator symbol like <strong>:+, :*, :/</strong></p>
+
+<pre><code>    [1,2,3].inject(:+) # =&gt; 6
+    [2,4,6].inject(:*) # =&gt; 48
+</code></pre>
+
+<p>Another awesomeness inject method is you can build hash key value from multi dimensional 2xN array, for example :</p>
+
+<pre><code>    [[:a,1],[:b,2],[:c,3]].inject({}){|init,elem| init.merge(elem.first =&gt; elem.last)  }
+    # =&gt; {:a=&gt;1, :b=&gt;2, :c=&gt;3}
+</code></pre>
+]]></content>
+    
+  </entry>
+  
+  <entry>
+    
+    <title type="html"><![CDATA[CarrierWave uploader for tableless model in Ruby on Rails]]></title>
+    <link href="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/"/>
+    
+    <updated>2013-11-19T06:57:05+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails</id>
+    
+    <content type="html"><![CDATA[<p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
+
+<pre><code>class User
+    attr_accessor :id, :name, :avatar
+    ...
+end
+</code></pre>
+
+<!-- MORE -->
+
+
+<p>I need to store user&rsquo;s avatar using carrierwave, in this case i create <strong>AvatarUploader</strong>, the problem is how i store avatar from instantiating User model ? If your class is subclass of ActiveRecord::Base, you can use <strong>mount_uploader</strong>
+method, but if you have model like User which is not subclass of ActiveRecord::Base you will get exception :</p>
+
+<pre><code>undefined method `mount_uploader' for User:Class
+</code></pre>
+
+<p>Based on <a href="http://carrierwave.rubyforge.org/rdoc/">carrierwave documentation</a> you can use <a href="http://carrierwave.rubyforge.org/rdoc/classes/CarrierWave/Mount.html#M000027">mount_uploader</a> if your class extend <strong>CarrierWave::Mount</strong> module and your class will have capability to store a file using instance method <code>store_(mounted_field)!</code> or <code>cache_(mounted_field)!</code>. So lets refactor our User model :</p>
+
+<pre><code>class User
+    extend CarrierWave::Mount
+    attr_accessor :id, :name, :avatar
+    mount_uploader :avatar, AvatarUploader
+    ...
+    def save
+        self.store_avatar!
+    end
+    ...
+end
+</code></pre>
+
+<p>And you can test from rails console :</p>
+
+<pre><code>u = User.new(id:1, name:"swagger")
+u.avatar = File.open(some_avatar_image_file_path)
+u.save
+</code></pre>
+
+<p>from rails console, a some version of avatar will created in <strong>public/tmp/timestamp/</strong> when  you assign image file to avatar field, when method <strong>save</strong> executed it will be move to <code>public/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}</code></p>
+]]></content>
+    
+  </entry>
+  
+  <entry>
+    
+    <title type="html"><![CDATA[add-apt-repository, server certificate verification failed]]></title>
+    <link href="http://brain64bit.github.io/blog/2013/11/18/add-apt-repository/"/>
+    
+    <updated>2013-11-18T16:56:50+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2013/11/18/add-apt-repository</id>
+    
+    <content type="html"><![CDATA[<p>I&rsquo;ve got encountered problem when try to add new repository to ubuntu 12.04 using apt :</p>
+
+<pre><code>Traceback (most recent call last):
+    File "/usr/bin/apt-add-repository", line 125, in &lt;module&gt;
+    ppa_info = get_ppa_info_from_lp(user, ppa_name)
+File "/usr/lib/python2.7/dist-packages/softwareproperties/ppa.py", line 84, in get_ppa_info_from_lp
+    curl.perform()
+pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none')
+</code></pre>
+
+<!-- MORE -->
+
+
+<p>this error happen since ppa.py depend on pycurl, curl trying to verify peer and host with curl.setopt(pycurl.SSL_VERIFYPEER, 1) and curl.setopt(pycurl.SSL_VERIFYHOST, 2):</p>
+
+<pre><code>def get_ppa_info_from_lp(owner_name, ppa_name):
+lp_url = LAUNCHPAD_PPA_API % (owner_name, ppa_name)
+    # we ask for a JSON structure from lp_page, we could use
+    # simplejson, but the format is simple enough for the regexp
+    callback = CurlCallback()
+    curl = pycurl.Curl()
+
+    curl.setopt(pycurl.SSL_VERIFYPEER, 1)
+    curl.setopt(pycurl.SSL_VERIFYHOST, 2)
+
+    curl.setopt(pycurl.WRITEFUNCTION, callback.body_callback)
+    # only useful for testing
+    if LAUNCHPAD_PPA_CERT:
+        curl.setopt(pycurl.CAINFO, LAUNCHPAD_PPA_CERT)
+    curl.setopt(pycurl.URL, str(lp_url))
+    curl.setopt(pycurl.HTTPHEADER, ["Accept: application/json"])
+    curl.perform()
+    curl.close()
+    lp_page = callback.contents
+    return json.loads(lp_page) 
+</code></pre>
+
+<p>from <a href="http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYHOST">http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTSSLVERIFYHOST</a> you can bypass this verification using pass a long set to 0 :</p>
+
+<pre><code>...
+curl.setopt(pycurl.SSL_VERIFYPEER, 0)
+curl.setopt(pycurl.SSL_VERIFYHOST, 0)
+...
+</code></pre>
+]]></content>
+    
+  </entry>
+  
+</feed>

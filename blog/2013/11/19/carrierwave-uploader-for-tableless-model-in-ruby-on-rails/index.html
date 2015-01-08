@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>devblog of @sgt_mactavish</title>
+  <title>CarrierWave uploader for tableless model in Ruby on Rails - devblog of @sgt_mactavish</title>
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
-The problem exists when &hellip;">
+  <meta name="description" content="In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User : class User &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ The problem exists when &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://brain64bit.github.io">
+  <link rel="canonical" href="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
@@ -66,119 +65,15 @@ The problem exists when &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
   
     
-      <h1 class="entry-title"><a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick on OSX Yosemite</a></h1>
-      
-      
+      <h1 class="entry-title">CarrierWave Uploader for Tableless Model in Ruby on Rails</h1>
     
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
-
-
-<time datetime="2015-01-08T23:53:22+07:00" pubdate data-updated="true">Jan 8<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
-The problem exists when bundler try to install rmagick gem and having trouble finding <strong>MagickWand.h</strong> for building native extension.</p>
-
-<pre><code>Can't install RMagick 2.13.2. Can't find MagickWand.h.
-*** extconf.rb failed ***
-Could not create Makefile due to some reason, probably lack of necessary
-libraries and/or headers.  Check the mkmf.log file for more details.  You may
-need configuration options.
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/18/ruby-inject-method/">Ruby Inject Method</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-18T07:23:14+07:00" pubdate data-updated="true">Mar 18<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
-
-<p>For example inject method useful for accumulation in one dimensional array :</p>
-
-<pre><code>[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
-</code></pre>
-
-<p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/03/18/ruby-inject-method/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">CarrierWave Uploader for Tableless Model in Ruby on Rails</a></h1>
-      
-      
     
       <p class="meta">
         
@@ -200,7 +95,7 @@ need configuration options.
   </header>
 
 
-  <div class="entry-content"><p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
+<div class="entry-content"><p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
 
 <pre><code>class User
     attr_accessor :id, :name, :avatar
@@ -208,74 +103,99 @@ need configuration options.
 end
 </code></pre>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">Read on &rarr;</a>
-    </footer>
-  
+<!-- MORE -->
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/18/add-apt-repository/">Add-apt-repository, Server Certificate Verification Failed</a></h1>
-      
-      
-    
-      <p class="meta">
-        
+<p>I need to store user&rsquo;s avatar using carrierwave, in this case i create <strong>AvatarUploader</strong>, the problem is how i store avatar from instantiating User model ? If your class is subclass of ActiveRecord::Base, you can use <strong>mount_uploader</strong>
+method, but if you have model like User which is not subclass of ActiveRecord::Base you will get exception :</p>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-18T16:56:50+07:00" pubdate data-updated="true">Nov 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve got encountered problem when try to add new repository to ubuntu 12.04 using apt :</p>
-
-<pre><code>Traceback (most recent call last):
-    File "/usr/bin/apt-add-repository", line 125, in &lt;module&gt;
-    ppa_info = get_ppa_info_from_lp(user, ppa_name)
-File "/usr/lib/python2.7/dist-packages/softwareproperties/ppa.py", line 84, in get_ppa_info_from_lp
-    curl.perform()
-pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none')
+<pre><code>undefined method `mount_uploader' for User:Class
 </code></pre>
 
+<p>Based on <a href="http://carrierwave.rubyforge.org/rdoc/">carrierwave documentation</a> you can use <a href="http://carrierwave.rubyforge.org/rdoc/classes/CarrierWave/Mount.html#M000027">mount_uploader</a> if your class extend <strong>CarrierWave::Mount</strong> module and your class will have capability to store a file using instance method <code>store_(mounted_field)!</code> or <code>cache_(mounted_field)!</code>. So lets refactor our User model :</p>
+
+<pre><code>class User
+    extend CarrierWave::Mount
+    attr_accessor :id, :name, :avatar
+    mount_uploader :avatar, AvatarUploader
+    ...
+    def save
+        self.store_avatar!
+    end
+    ...
+end
+</code></pre>
+
+<p>And you can test from rails console :</p>
+
+<pre><code>u = User.new(id:1, name:"swagger")
+u.avatar = File.open(some_avatar_image_file_path)
+u.save
+</code></pre>
+
+<p>from rails console, a some version of avatar will created in <strong>public/tmp/timestamp/</strong> when  you assign image file to avatar field, when method <strong>save</strong> executed it will be move to <code>public/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}</code></p>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/18/add-apt-repository/">Read on &rarr;</a>
-    </footer>
+
+<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
+
+      
+
+
+
+
+
+
+
+
   
 
 
-    </article>
+<time datetime="2013-11-19T06:57:05+07:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
+      
+
+<span class="categories">
   
-  <div class="pagination">
+    <a class='category' href='/blog/categories/carrierwave/'>carrierwave</a>, <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
     
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/" >Tweet</a>
+  
+  
+  
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/11/18/add-apt-repository/" title="Previous Post: add-apt-repository, server certificate verification failed">&laquo; add-apt-repository, server certificate verification failed</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/03/18/ruby-inject-method/" title="Next Post: ruby inject method">ruby inject method &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -304,7 +224,7 @@ pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/cer
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/brain64bit">@brain64bit</a> on GitHub
@@ -337,6 +257,7 @@ pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/cer
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -353,7 +274,10 @@ pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/cer
       var disqus_shortname = 'minified';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/';
+        var disqus_url = 'http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
