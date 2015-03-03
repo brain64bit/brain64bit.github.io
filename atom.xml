@@ -4,7 +4,7 @@
   <title><![CDATA[devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-01-09T00:44:39+07:00</updated>
+  <updated>2015-03-04T00:42:23+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Progressbar Upload with Refile Gem]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/"/>
+    
+    <updated>2015-03-03T23:30:07+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem</id>
+    
+    <content type="html"><![CDATA[<p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
+One of features that i like is built in javascript library, which is contains several custom DOM events.
+These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
+
+<p>By default refile provide helpers to built UI element of file input field:</p>
+
+<pre><code>= f.attachment_field :file_field
+</code></pre>
+
+<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
+
+<!-- MORE -->
+
+
+<pre><code>= f.attachment_field :file_field, direct: true
+</code></pre>
+
+<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>form.addEventListener('upload:start', function(e){});
+</span><span class='line'>form.addEventListener('upload:progress', function(e){});
+</span><span class='line'>form.addEventListener('upload:success', function(e){});
+</span><span class='line'>form.addEventListener('upload:complete', function(e){});
+</span><span class='line'>form.addEventListener('upload:failure', function(e){});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= form_for @object, html: {class: 'form-horizontal'} do |f|
+</span><span class='line'>  ...
+</span><span class='line'>  .form-group
+</span><span class='line'>    = f.label :file_field, class: 'col-sm-3 control-label'
+</span><span class='line'>    .col-sm-7
+</span><span class='line'>      = f.attachment_field :file_field, class: 'form-control', direct: true
+</span><span class='line'>      #progress-bar-container.hidden
+</span><span class='line'>        .progress.progress-striped
+</span><span class='line'>          .progress-bar.progress-bar-info style="width: 0%"
+</span><span class='line'>  ...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
+We can utilize <strong>upload:progress</strong> event for this purpose.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>FileUploader = {
+</span><span class='line'>  init: function(){
+</span><span class='line'>    var form = document.querySelector('form'),
+</span><span class='line'>    form.addEventListener('upload:progress', function(event){
+</span><span class='line'>      this.doProgress(event);
+</span><span class='line'>    }.bind(this));
+</span><span class='line'>  },
+</span><span class='line'>
+</span><span class='line'>  doProgress: function(event){
+</span><span class='line'>    var detail = event.detail;
+</span><span class='line'>    var percentage = Math.round( (detail.loaded / detail.total) * 100);
+</span><span class='line'>    $('.progress-bar').css('width', percentage+'%');
+</span><span class='line'>  }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>$(document).ready(function(){
+</span><span class='line'>  Object.create(FileUploader).init();
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally this is our progressbar using refile gem, for more information you can read on <a href="https://github.com/refile/refile">refile</a>.</p>
+]]></content>
+    
+  </entry>
   
   <entry>
     
@@ -60,7 +173,7 @@ brew uninstall imagemagick &amp;&amp; brew install imagemagick
     <updated>2014-03-18T07:23:14+07:00</updated>
     <id>http://brain64bit.github.io/blog/2014/03/18/ruby-inject-method</id>
     
-    <content type="html"><![CDATA[<p>ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
+    <content type="html"><![CDATA[<p>Ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
 
 <p>For example inject method useful for accumulation in one dimensional array :</p>
 

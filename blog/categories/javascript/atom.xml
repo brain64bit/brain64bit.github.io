@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: javascript | devblog of @sgt_mactavish]]></title>
+  <link href="http://brain64bit.github.io/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://brain64bit.github.io/"/>
+  <updated>2015-03-04T00:42:23+07:00</updated>
+  <id>http://brain64bit.github.io/</id>
+  <author>
+    <name><![CDATA[@sgt_mactavish]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Progressbar Upload with Refile Gem]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/"/>
+    <updated>2015-03-03T23:30:07+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem</id>
+    <content type="html"><![CDATA[<p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
+One of features that i like is built in javascript library, which is contains several custom DOM events.
+These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
+
+<p>By default refile provide helpers to built UI element of file input field:</p>
+
+<pre><code>= f.attachment_field :file_field
+</code></pre>
+
+<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
+
+<!-- MORE -->
+
+
+<pre><code>= f.attachment_field :file_field, direct: true
+</code></pre>
+
+<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :
+<code>
+form.addEventListener('upload:start', function(e){});
+form.addEventListener('upload:progress', function(e){});
+form.addEventListener('upload:success', function(e){});
+form.addEventListener('upload:complete', function(e){});
+form.addEventListener('upload:failure', function(e){});
+</code>
+Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.
+```
+= form_for @object, html: {class: &lsquo;form-horizontal&rsquo;} do |f|
+  &hellip;
+  .form-group</p>
+
+<pre><code>= f.label :file_field, class: 'col-sm-3 control-label'
+.col-sm-7
+  = f.attachment_field :file_field, class: 'form-control', direct: true
+  #progress-bar-container.hidden
+    .progress.progress-striped
+      .progress-bar.progress-bar-info style="width: 0%"
+</code></pre>
+
+<p>  &hellip;
+<code>
+Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
+We can utilize **upload:progress** event for this purpose.
+</code>
+FileUploader = {
+  init: function(){</p>
+
+<pre><code>var form = document.querySelector('form'),
+form.addEventListener('upload:progress', function(event){
+  this.doProgress(event);
+}.bind(this));
+</code></pre>
+
+<p>  },</p>
+
+<p>  doProgress: function(event){</p>
+
+<pre><code>var detail = event.detail;
+var percentage = Math.round( (detail.loaded / detail.total) * 100);
+$('.progress-bar').css('width', percentage+'%');
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>&hellip;</p>
+
+<p>$(document).ready(function(){
+  Object.create(FileUploader).init();
+});
+```
+Finally this is our progressbar using refile gem, for more information you can read on <a href="https://github.com/refile/refile">refile</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

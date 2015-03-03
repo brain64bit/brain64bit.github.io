@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Progressbar Upload with Refile Gem - devblog of @sgt_mactavish</title>
+  <meta name="author" content="@sgt_mactavish">
+
+  
+  <meta name="description" content="There is a ruby gem library for file upload called refile.
+One of features that i like is built in javascript library, which is contains several &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+  
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner">
+	<div class="header-title"><a href="/">devblog of @sgt_mactavish</a></div>
+
+
+	<br><div class="header-subtitle">developer log & random thoughts</div>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:brain64bit.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/categories">Categories</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+  
+    
+      <h1 class="entry-title">Progressbar Upload With Refile Gem</h1>
+    
+  
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-03T23:30:07+07:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
+One of features that i like is built in javascript library, which is contains several custom DOM events.
+These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
+
+<p>By default refile provide helpers to built UI element of file input field:</p>
+
+<pre><code>= f.attachment_field :file_field
+</code></pre>
+
+<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
+
+<!-- MORE -->
+
+
+<pre><code>= f.attachment_field :file_field, direct: true
+</code></pre>
+
+<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>form.addEventListener('upload:start', function(e){});
+</span><span class='line'>form.addEventListener('upload:progress', function(e){});
+</span><span class='line'>form.addEventListener('upload:success', function(e){});
+</span><span class='line'>form.addEventListener('upload:complete', function(e){});
+</span><span class='line'>form.addEventListener('upload:failure', function(e){});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= form_for @object, html: {class: 'form-horizontal'} do |f|
+</span><span class='line'>  ...
+</span><span class='line'>  .form-group
+</span><span class='line'>    = f.label :file_field, class: 'col-sm-3 control-label'
+</span><span class='line'>    .col-sm-7
+</span><span class='line'>      = f.attachment_field :file_field, class: 'form-control', direct: true
+</span><span class='line'>      #progress-bar-container.hidden
+</span><span class='line'>        .progress.progress-striped
+</span><span class='line'>          .progress-bar.progress-bar-info style="width: 0%"
+</span><span class='line'>  ...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
+We can utilize <strong>upload:progress</strong> event for this purpose.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>FileUploader = {
+</span><span class='line'>  init: function(){
+</span><span class='line'>    var form = document.querySelector('form'),
+</span><span class='line'>    form.addEventListener('upload:progress', function(event){
+</span><span class='line'>      this.doProgress(event);
+</span><span class='line'>    }.bind(this));
+</span><span class='line'>  },
+</span><span class='line'>
+</span><span class='line'>  doProgress: function(event){
+</span><span class='line'>    var detail = event.detail;
+</span><span class='line'>    var percentage = Math.round( (detail.loaded / detail.total) * 100);
+</span><span class='line'>    $('.progress-bar').css('width', percentage+'%');
+</span><span class='line'>  }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>...
+</span><span class='line'>
+</span><span class='line'>$(document).ready(function(){
+</span><span class='line'>  Object.create(FileUploader).init();
+</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally this is our progressbar using refile gem, for more information you can read on <a href="https://github.com/refile/refile">refile</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-03T23:30:07+07:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2015</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/" title="Previous Post: Install Rmagick On OSX Yosemite">&laquo; Install Rmagick On OSX Yosemite</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Progressbar Upload with Refile Gem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick On OSX Yosemite</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/18/ruby-inject-method/">ruby inject method</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">CarrierWave uploader for tableless model in Ruby on Rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/18/add-apt-repository/">add-apt-repository, server certificate verification failed</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/brain64bit">@brain64bit</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'brain64bit',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 -  @sgt_mactavish <br/>
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> + <a href="https://github.com/ioveracker/mnml">mnml</a>.
+	  
+  </span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'minified';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/';
+        var disqus_url = 'http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

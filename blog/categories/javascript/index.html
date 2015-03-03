@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>CarrierWave uploader for tableless model in Ruby on Rails - devblog of @sgt_mactavish</title>
+  <title>Category: javascript - devblog of @sgt_mactavish</title>
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User : class User &hellip;">
+  <meta name="description" content="Category: javascript">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails">
+  <link rel="canonical" href="http://brain64bit.github.ioblog/categories/javascript">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
@@ -66,133 +66,31 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-  
-    
-      <h1 class="entry-title">CarrierWave Uploader for Tableless Model in Ruby on Rails</h1>
-    
-  
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T06:57:05+07:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-        
-      </p>
+    <h1 class="entry-title">Category: Javascript</h1>
     
   </header>
-
-
-<div class="entry-content"><p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
-
-<pre><code>class User
-    attr_accessor :id, :name, :avatar
-    ...
-end
-</code></pre>
-
-<!-- MORE -->
-
-
-<p>I need to store user&rsquo;s avatar using carrierwave, in this case i create <strong>AvatarUploader</strong>, the problem is how i store avatar from instantiating User model ? If your class is subclass of ActiveRecord::Base, you can use <strong>mount_uploader</strong>
-method, but if you have model like User which is not subclass of ActiveRecord::Base you will get exception :</p>
-
-<pre><code>undefined method `mount_uploader' for User:Class
-</code></pre>
-
-<p>Based on <a href="http://carrierwave.rubyforge.org/rdoc/">carrierwave documentation</a> you can use <a href="http://carrierwave.rubyforge.org/rdoc/classes/CarrierWave/Mount.html#M000027">mount_uploader</a> if your class extend <strong>CarrierWave::Mount</strong> module and your class will have capability to store a file using instance method <code>store_(mounted_field)!</code> or <code>cache_(mounted_field)!</code>. So lets refactor our User model :</p>
-
-<pre><code>class User
-    extend CarrierWave::Mount
-    attr_accessor :id, :name, :avatar
-    mount_uploader :avatar, AvatarUploader
-    ...
-    def save
-        self.store_avatar!
-    end
-    ...
-end
-</code></pre>
-
-<p>And you can test from rails console :</p>
-
-<pre><code>u = User.new(id:1, name:"swagger")
-u.avatar = File.open(some_avatar_image_file_path)
-u.save
-</code></pre>
-
-<p>from rails console, a some version of avatar will created in <strong>public/tmp/timestamp/</strong> when  you assign image file to avatar field, when method <strong>save</strong> executed it will be move to <code>public/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}</code></p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2015</h2>
 
+<article>
+  
+<h1><a href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Progressbar Upload with Refile Gem</a></h1>
+<time datetime="2015-03-03T23:30:07+07:00" pubdate><span class='month'>March</span> <span class='day'>03</span> <span class='year'>2015</span></time>
 
-<time datetime="2013-11-19T06:57:05+07:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/carrierwave/'>carrierwave</a>, <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/11/18/add-apt-repository/" title="Previous Post: add-apt-repository, server certificate verification failed">&laquo; add-apt-repository, server certificate verification failed</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/03/18/ruby-inject-method/" title="Next Post: ruby inject method">ruby inject method &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -278,10 +176,7 @@ u.save
       var disqus_shortname = 'minified';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/';
-        var disqus_url = 'http://brain64bit.github.io/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
