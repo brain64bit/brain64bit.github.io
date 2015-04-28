@@ -4,7 +4,7 @@
   <title><![CDATA[devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-03-21T16:29:43+07:00</updated>
+  <updated>2015-04-29T00:58:46+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Extra '\n' inside rails mailer template]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/"/>
+    
+    <updated>2015-04-29T00:21:02+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template</id>
+    
+    <content type="html"><![CDATA[<p>When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
+For example in my apps there is a feature to reset password, which is of course inside the email contains <strong>reset password</strong> link.</p>
+
+<p>For securing the reset password link it must supply a params called <strong>reset_password_token</strong>. The problem found when the reset password link doesnt
+work, because its always wrong redirect. Can you spot the problem ?.</p>
+
+<pre><code>&lt;a href="http://example.com/users/password/edit?reset_password_to%20ken=asdf1234"&gt;change password&lt;/a&gt;
+</code></pre>
+
+<!-- MORE -->
+
+
+<p>Accidentally the links params contains extra <strong>\n</strong>. This kind of issue with html frameworks that generate HTML with no true line breaks.
+Based on <a href="https://www.ietf.org/rfc/rfc5321.txt">rfc5321</a> <strong>4.5.3.1.6.  Text Line</strong> its state :</p>
+
+<blockquote><p>The maximum total length of a text line including the <CRLF> is 1000
+octets (not counting the leading dot duplicated for transparency).</p></blockquote>
+
+<p>Hell yeah because i&rsquo;m using SLIM for mailer template, in production SLIM compiles as a single-line by default <code>pretty: false</code> for optimization.
+We can solve it by toggle the <strong>pretty</strong> option to true, see <a href="http://www.rubydoc.info/gems/slim/frames#Configuring_Slim">slim config</a>.</p>
+
+<p>But this kind of solution will be sacrifice to other page except the mailer template not being optimized.
+Instead using slim for mailer template, just use <strong>ERB</strong> so it will break every new line.</p>
+]]></content>
+    
+  </entry>
   
   <entry>
     

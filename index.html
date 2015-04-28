@@ -9,7 +9,8 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="So few weeks ago i&rsquo;ve got problem in a rails apps. New Relic reports about 500 error, where the main cause is accessing method in nil object. &hellip;">
+  <meta name="description" content="When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
+For example in my apps there is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +68,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+  
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra &#8216;\n&#8217; Inside Rails Mailer Template</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-29T00:21:02+07:00" pubdate data-updated="true">Apr 29<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
+For example in my apps there is a feature to reset password, which is of course inside the email contains <strong>reset password</strong> link.</p>
+
+<p>For securing the reset password link it must supply a params called <strong>reset_password_token</strong>. The problem found when the reset password link doesnt
+work, because its always wrong redirect. Can you spot the problem ?.</p>
+
+<pre><code>&lt;a href="http://example.com/users/password/edit?reset_password_to%20ken=asdf1234"&gt;change password&lt;/a&gt;
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -277,55 +328,6 @@ need configuration options.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">CarrierWave Uploader for Tableless Model in Ruby on Rails</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T06:57:05+07:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
-
-<pre><code>class User
-    attr_accessor :id, :name, :avatar
-    ...
-end
-</code></pre>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -341,6 +343,10 @@ end
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra &#8216;\n&#8217; inside rails mailer template</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/">Problem using ActiveRecord #exists? in eager load resultset</a>
       </li>
     
@@ -354,10 +360,6 @@ end
     
       <li class="post">
         <a href="/blog/2014/03/18/ruby-inject-method/">ruby inject method</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/19/carrierwave-uploader-for-tableless-model-in-ruby-on-rails/">CarrierWave uploader for tableless model in Ruby on Rails</a>
       </li>
     
   </ul>
