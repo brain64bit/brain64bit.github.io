@@ -102,34 +102,39 @@ These events also can be listen, so you can provide logic easily around file upl
 
 <p>By default refile provide helpers to built UI element of file input field:</p>
 
-<pre><code>= f.attachment_field :file_field
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
 
 <!-- MORE -->
 
 
-<pre><code>= f.attachment_field :file_field, direct: true
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>form.addEventListener('upload:start', function(e){});
-</span><span class='line'>form.addEventListener('upload:progress', function(e){});
-</span><span class='line'>form.addEventListener('upload:success', function(e){});
-</span><span class='line'>form.addEventListener('upload:complete', function(e){});
-</span><span class='line'>form.addEventListener('upload:failure', function(e){});</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:start&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
+</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
+</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:success&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
+</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:complete&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
+</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:failure&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -139,22 +144,23 @@ These events also can be listen, so you can provide logic easily around file upl
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>= form_for @object, html: {class: 'form-horizontal'} do |f|
-</span><span class='line'>  ...
-</span><span class='line'>  .form-group
-</span><span class='line'>    = f.label :file_field, class: 'col-sm-3 control-label'
-</span><span class='line'>    .col-sm-7
-</span><span class='line'>      = f.attachment_field :file_field, class: 'form-control', direct: true
-</span><span class='line'>      #progress-bar-container.hidden
-</span><span class='line'>        .progress.progress-striped
-</span><span class='line'>          .progress-bar.progress-bar-info style="width: 0%"
-</span><span class='line'>  ...</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">form_for</span> <span class="vi">@object</span><span class="p">,</span> <span class="ss">html</span><span class="p">:</span> <span class="p">{</span><span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-horizontal&#39;</span><span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">form</span><span class="o">-</span><span class="n">group</span>
+</span><span class='line'>    <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;col-sm-3 control-label&#39;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">col</span><span class="o">-</span><span class="n">sm</span><span class="o">-</span><span class="mi">7</span>
+</span><span class='line'>      <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'>      <span class="c1">#progress-bar-container.hidden</span>
+</span><span class='line'>        <span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">striped</span>
+</span><span class='line'>          <span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">-</span><span class="n">info</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width: 0%&quot;</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
 We can utilize <strong>upload:progress</strong> event for this purpose.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -174,26 +180,27 @@ We can utilize <strong>upload:progress</strong> event for this purpose.</p>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>FileUploader = {
-</span><span class='line'>  init: function(){
-</span><span class='line'>    var form = document.querySelector('form'),
-</span><span class='line'>    form.addEventListener('upload:progress', function(event){
-</span><span class='line'>      this.doProgress(event);
-</span><span class='line'>    }.bind(this));
-</span><span class='line'>  },
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">FileUploader</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">doProgress</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+</span><span class='line'>  <span class="p">},</span>
 </span><span class='line'>
-</span><span class='line'>  doProgress: function(event){
-</span><span class='line'>    var detail = event.detail;
-</span><span class='line'>    var percentage = Math.round( (detail.loaded / detail.total) * 100);
-</span><span class='line'>    $('.progress-bar').css('width', percentage+'%');
-</span><span class='line'>  }
-</span><span class='line'>}
+</span><span class='line'>  <span class="nx">doProgress</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">detail</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">percentage</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span> <span class="p">(</span><span class="nx">detail</span><span class="p">.</span><span class="nx">loaded</span> <span class="o">/</span> <span class="nx">detail</span><span class="p">.</span><span class="nx">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.progress-bar&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">percentage</span><span class="o">+</span><span class="s1">&#39;%&#39;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>...
+</span><span class='line'><span class="p">...</span>
 </span><span class='line'>
-</span><span class='line'>$(document).ready(function(){
-</span><span class='line'>  Object.create(FileUploader).init();
-</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">FileUploader</span><span class="p">).</span><span class="nx">init</span><span class="p">();</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>Finally this is our progressbar using refile gem, for more information you can read on <a href="https://github.com/refile/refile">refile</a>.</p>

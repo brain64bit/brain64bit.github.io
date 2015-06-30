@@ -9,7 +9,11 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User : class User &hellip;">
+  <meta name="description" content="In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User : 1
+2
+3
+4
+class User &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -97,11 +101,16 @@
 
 <div class="entry-content"><p>In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User :</p>
 
-<pre><code>class User
-    attr_accessor :id, :name, :avatar
-    ...
-end
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:avatar</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <!-- MORE -->
 
@@ -109,29 +118,38 @@ end
 <p>I need to store user&rsquo;s avatar using carrierwave, in this case i create <strong>AvatarUploader</strong>, the problem is how i store avatar from instantiating User model ? If your class is subclass of ActiveRecord::Base, you can use <strong>mount_uploader</strong>
 method, but if you have model like User which is not subclass of ActiveRecord::Base you will get exception :</p>
 
-<pre><code>undefined method `mount_uploader' for User:Class
-</code></pre>
+<p>  undefined method `mount_uploader&#8217; for User:Class</p>
 
 <p>Based on <a href="http://carrierwave.rubyforge.org/rdoc/">carrierwave documentation</a> you can use <a href="http://carrierwave.rubyforge.org/rdoc/classes/CarrierWave/Mount.html#M000027">mount_uploader</a> if your class extend <strong>CarrierWave::Mount</strong> module and your class will have capability to store a file using instance method <code>store_(mounted_field)!</code> or <code>cache_(mounted_field)!</code>. So lets refactor our User model :</p>
 
-<pre><code>class User
-    extend CarrierWave::Mount
-    attr_accessor :id, :name, :avatar
-    mount_uploader :avatar, AvatarUploader
-    ...
-    def save
-        self.store_avatar!
-    end
-    ...
-end
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="kp">extend</span> <span class="ss">CarrierWave</span><span class="p">:</span><span class="ss">:Mount</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:id</span><span class="p">,</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:avatar</span>
+</span><span class='line'>  <span class="n">mount_uploader</span> <span class="ss">:avatar</span><span class="p">,</span> <span class="no">AvatarUploader</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">save</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">store_avatar!</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>And you can test from rails console :</p>
 
-<pre><code>u = User.new(id:1, name:"swagger")
-u.avatar = File.open(some_avatar_image_file_path)
-u.save
-</code></pre>
+<p>  u = User.new(id:1, name:&ldquo;swagger&rdquo;)
+  u.avatar = File.open(some_avatar_image_file_path)
+  u.save</p>
 
 <p>from rails console, a some version of avatar will created in <strong>public/tmp/timestamp/</strong> when  you assign image file to avatar field, when method <strong>save</strong> executed it will be move to <code>public/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}</code></p>
 </div>

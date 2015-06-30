@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-04-29T00:58:46+07:00</updated>
+  <updated>2015-06-30T12:47:22+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -24,19 +24,20 @@ These events also can be listen, so you can provide logic easily around file upl
 
 <p>By default refile provide helpers to built UI element of file input field:</p>
 
-<pre><code>= f.attachment_field :file_field
-</code></pre>
+<p><code>ruby
+= f.attachment_field :file_field
+</code></p>
 
 <p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
 
 <!-- MORE -->
 
 
-<pre><code>= f.attachment_field :file_field, direct: true
-</code></pre>
-
-<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :
-<code>
+<p><code>ruby
+= f.attachment_field :file_field, direct: true
+</code>
+Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :
+<code>javascript
 form.addEventListener('upload:start', function(e){});
 form.addEventListener('upload:progress', function(e){});
 form.addEventListener('upload:success', function(e){});
@@ -44,7 +45,7 @@ form.addEventListener('upload:complete', function(e){});
 form.addEventListener('upload:failure', function(e){});
 </code>
 Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.
-```
+```ruby
 = form_for @object, html: {class: &lsquo;form-horizontal&rsquo;} do |f|
   &hellip;
   .form-group</p>
@@ -61,11 +62,11 @@ Because we focused only progressbar upload, lets construct the form to using twi
 <code>
 Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
 We can utilize **upload:progress** event for this purpose.
-</code>
+</code>javascript
 FileUploader = {
   init: function(){</p>
 
-<pre><code>var form = document.querySelector('form'),
+<pre><code>var form = document.querySelector('form');
 form.addEventListener('upload:progress', function(event){
   this.doProgress(event);
 }.bind(this));

@@ -152,14 +152,22 @@ work, because its always wrong redirect. Can you spot the problem ?.</p>
   <div class="entry-content"><p>So few weeks ago i&rsquo;ve got problem in a rails apps. New Relic reports about 500 error, where the main cause is <strong>accessing method in nil object</strong>.
 Here is code snippet, causing the error :</p>
 
-<pre><code>class User &lt; ActiveRecord::Base
-  has_many :posts, -&gt; { order "created_at DESC" }
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:posts</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">order</span> <span class="s2">&quot;created_at DESC&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">latest_title</span>
+</span><span class='line'>    <span class="n">posts</span><span class="o">.</span><span class="n">exists?</span> <span class="o">&amp;&amp;</span> <span class="n">posts</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">title</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-  def latest_title
-    posts.exists? &amp;&amp; posts.first.title
-  end
-end
-</code></pre>
 
 <p>From the code above, user object have a method <strong>latest_title</strong> it just check if user has posts and fetch the first post&rsquo;s title.
 But somehow its produce weird error when calls <strong>user.latest_title</strong>.</p>
@@ -211,8 +219,10 @@ These events also can be listen, so you can provide logic easily around file upl
 
 <p>By default refile provide helpers to built UI element of file input field:</p>
 
-<pre><code>= f.attachment_field :file_field
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
 
@@ -260,12 +270,20 @@ These events also can be listen, so you can provide logic easily around file upl
   <div class="entry-content"><p>So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
 The problem exists when bundler try to install rmagick gem and having trouble finding <strong>MagickWand.h</strong> for building native extension.</p>
 
-<pre><code>Can't install RMagick 2.13.2. Can't find MagickWand.h.
-*** extconf.rb failed ***
-Could not create Makefile due to some reason, probably lack of necessary
-libraries and/or headers.  Check the mkmf.log file for more details.  You may
-need configuration options.
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Can<span class="s1">&#39;t install RMagick 2.13.2. Can&#39;</span>t find MagickWand.h.
+</span><span class='line'>*** extconf.rb failed ***
+</span><span class='line'>Could not create Makefile due to some reason, probably lack of necessary
+</span><span class='line'>libraries and/or headers.  Check the mkmf.log file <span class="k">for </span>more details.  You may
+</span><span class='line'>need configuration options.
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   

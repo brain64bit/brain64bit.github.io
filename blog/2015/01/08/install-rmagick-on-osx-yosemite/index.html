@@ -99,12 +99,20 @@ The problem exists when &hellip;">
 <div class="entry-content"><p>So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
 The problem exists when bundler try to install rmagick gem and having trouble finding <strong>MagickWand.h</strong> for building native extension.</p>
 
-<pre><code>Can't install RMagick 2.13.2. Can't find MagickWand.h.
-*** extconf.rb failed ***
-Could not create Makefile due to some reason, probably lack of necessary
-libraries and/or headers.  Check the mkmf.log file for more details.  You may
-need configuration options.
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Can<span class="s1">&#39;t install RMagick 2.13.2. Can&#39;</span>t find MagickWand.h.
+</span><span class='line'>*** extconf.rb failed ***
+</span><span class='line'>Could not create Makefile due to some reason, probably lack of necessary
+</span><span class='line'>libraries and/or headers.  Check the mkmf.log file <span class="k">for </span>more details.  You may
+</span><span class='line'>need configuration options.
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 <!-- MORE -->
 
@@ -112,15 +120,20 @@ need configuration options.
 <p>This problem can be solved by tell explicitly to rmagick where the path of imagemagick headers file with providing configuration options on gem installation,
 for example like,</p>
 
-<pre><code>gem install rmagick --with-opt-dir=your_path --with-opt-include=your_path
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>gem install rmagick --with-opt-dir<span class="o">=</span>your_path --with-opt-include<span class="o">=</span>your_path
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>But this problem could be solve easily by installing <a href="http://en.wikipedia.org/wiki/Pkg-config">pkgconfig</a> first before installing imagemagick. So now you can install pkgconfig first and reinstall the imagemagick.
 If you&rsquo;re using <strong>Homebrew</strong></p>
 
-<pre><code>brew install pkgconfig
-brew uninstall imagemagick &amp;&amp; brew install imagemagick
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew install pkgconfig
+</span><span class='line'>brew uninstall imagemagick <span class="o">&amp;&amp;</span> brew install imagemagick
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Now after reinstallation, you can easilly install rmagick gem as usual <strong>gem install rmagick</strong></p>
 </div>
