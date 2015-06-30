@@ -99,8 +99,10 @@
 
 <p>For example inject method useful for accumulation in one dimensional array :</p>
 
-<pre><code>[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">){</span> <span class="o">|</span><span class="n">initial_variable</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">+</span> <span class="n">initial_variable</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
 
@@ -109,25 +111,35 @@
 
 <p>From above example inject method will accumulate all element inside array / collection, which is :</p>
 
-<pre><code>    [1,2,3].inject(0){ |initial_variable, element| element + initial_variable} # =&gt; same as 1+2+3 = 6
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">){</span> <span class="o">|</span><span class="n">initial_variable</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">+</span> <span class="n">initial_variable</span><span class="p">}</span> <span class="c1"># =&gt; same as 1+2+3 = 6</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Another example :</p>
 
-<pre><code>    [2,4,6,8].inject(10){ |initial, element| initial * element } # =&gt; 3840
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">10</span><span class="p">){</span> <span class="o">|</span><span class="n">initial</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">initial</span> <span class="o">*</span> <span class="n">element</span> <span class="p">}</span> <span class="c1"># =&gt; 3840</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Well, from above example you can simplify the operation process by giving operator symbol like <strong>:+, :*, :/</strong></p>
 
-<pre><code>    [1,2,3].inject(:+) # =&gt; 6
-    [2,4,6].inject(:*) # =&gt; 48
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="ss">:+</span><span class="p">)</span> <span class="c1"># =&gt; 6</span>
+</span><span class='line'><span class="o">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="ss">:*</span><span class="p">)</span> <span class="c1"># =&gt; 48</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>Another awesomeness inject method is you can build hash key value from multi dimensional 2xN array, for example :</p>
 
-<pre><code>    [[:a,1],[:b,2],[:c,3]].inject({}){|init,elem| init.merge(elem.first =&gt; elem.last)  }
-    # =&gt; {:a=&gt;1, :b=&gt;2, :c=&gt;3}
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[[</span><span class="ss">:a</span><span class="p">,</span><span class="mi">1</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="ss">:b</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="ss">:c</span><span class="p">,</span><span class="mi">3</span><span class="o">]].</span><span class="n">inject</span><span class="p">({}){</span><span class="o">|</span><span class="n">init</span><span class="p">,</span><span class="n">elem</span><span class="o">|</span> <span class="n">init</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">first</span> <span class="o">=&gt;</span> <span class="n">elem</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>  <span class="p">}</span>
+</span><span class='line'><span class="c1"># =&gt; {:a=&gt;1, :b=&gt;2, :c=&gt;3}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 

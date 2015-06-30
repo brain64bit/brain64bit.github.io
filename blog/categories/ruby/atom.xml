@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ruby | devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-06-30T12:47:22+07:00</updated>
+  <updated>2015-06-30T22:04:25+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -189,35 +189,38 @@ Now after reinstallation, you can easilly install rmagick gem as usual <strong>g
 
 <p>For example inject method useful for accumulation in one dimensional array :</p>
 
-<pre><code>[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
-</code></pre>
-
-<p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
+<p><code>ruby
+[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
+</code>
+from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
 
 <!-- MORE -->
 
 
 <p>From above example inject method will accumulate all element inside array / collection, which is :</p>
 
-<pre><code>    [1,2,3].inject(0){ |initial_variable, element| element + initial_variable} # =&gt; same as 1+2+3 = 6
-</code></pre>
+<p><code>ruby
+[1,2,3].inject(0){ |initial_variable, element| element + initial_variable} # =&gt; same as 1+2+3 = 6
+</code>
+Another example :</p>
 
-<p>Another example :</p>
+<p><code>ruby
+[2,4,6,8].inject(10){ |initial, element| initial * element } # =&gt; 3840
+</code>
+Well, from above example you can simplify the operation process by giving operator symbol like <strong>:+, :*, :/</strong></p>
 
-<pre><code>    [2,4,6,8].inject(10){ |initial, element| initial * element } # =&gt; 3840
-</code></pre>
+<p><code>ruby
+[1,2,3].inject(:+) # =&gt; 6
+[2,4,6].inject(:*) # =&gt; 48
+</code>
+Another awesomeness inject method is you can build hash key value from multi dimensional 2xN array, for example :</p>
 
-<p>Well, from above example you can simplify the operation process by giving operator symbol like <strong>:+, :*, :/</strong></p>
+<p>```ruby
+[[:a,1],[:b,2],[:c,3]].inject({}){|init,elem| init.merge(elem.first => elem.last)  }</p>
 
-<pre><code>    [1,2,3].inject(:+) # =&gt; 6
-    [2,4,6].inject(:*) # =&gt; 48
-</code></pre>
+<h1>=> {:a=>1, :b=>2, :c=>3}</h1>
 
-<p>Another awesomeness inject method is you can build hash key value from multi dimensional 2xN array, for example :</p>
-
-<pre><code>    [[:a,1],[:b,2],[:c,3]].inject({}){|init,elem| init.merge(elem.first =&gt; elem.last)  }
-    # =&gt; {:a=&gt;1, :b=&gt;2, :c=&gt;3}
-</code></pre>
+<p>```</p>
 ]]></content>
   </entry>
   

@@ -330,8 +330,10 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
 
 <p>For example inject method useful for accumulation in one dimensional array :</p>
 
-<pre><code>[1,2,3].inject(0){ |initial_variable, element| element + initial_variable }
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">){</span> <span class="o">|</span><span class="n">initial_variable</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">+</span> <span class="n">initial_variable</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
 
