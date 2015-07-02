@@ -4,7 +4,7 @@
   <title><![CDATA[Category: elixir | devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/blog/categories/elixir/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-07-02T22:42:02+07:00</updated>
+  <updated>2015-07-03T01:14:20+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -14,11 +14,74 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Elixir Anonymous Function]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/07/03/elixir-anonymous-function/"/>
+    <updated>2015-07-03T01:08:21+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/07/03/elixir-anonymous-function</id>
+    <content type="html"><![CDATA[<p>In Elixir we can create anonymous function like in javascript, use <strong>fn</strong> keyword to define an anonymous function.</p>
+
+<p>```elixir
+fn
+  parameters &ndash;> body
+end</p>
+
+<p>fn (parameters) &ndash;> body end
+<code>``
+Variable can be assigned by anonymous function, and you can call it using</code>variable_name.(arg1, arg2)` for example, below is a simple anonymous function that bind into a variable.</p>
+
+<!--MORE-->
+
+
+<p><code>elixir
+velocity = fn(distance, time) -&gt; distance / time end
+IO.puts "Speed of light is #{velocity.(600_000_000, 2)}"
+</code></p>
+
+<h2>Function &amp; Pattern Matching</h2>
+
+<p>Pattern matching can be applied in function, we can use pattern matching in function argument to determine which implementation to run. For example lets use tuple for argument.</p>
+
+<p>```elixir
+say = fn
+  {:en, name} &ndash;> IO.puts &ldquo;Hello #{name}&rdquo;
+  {:id, name} &ndash;> IO.puts &ldquo;Halo #{name}&rdquo;
+end</p>
+
+<p>say.({:id, &lsquo;Max&rsquo;})
+say.({:en, &lsquo;Rockatansky&rsquo;})
+```
+Please try and guess what the output of the example above. The tuple structure in function argument determines which implementation will be executed. It&rsquo;s like one function with multiple bodies. Now lets implement fizz-buzz without conditional but using pattern matching:</p>
+
+<p>```elixir
+fizz_buzz = fn
+  {0, 0, <em>} &ndash;> IO.puts &ldquo;FizzBuzz&rdquo;
+  {0, </em>, <em>} &ndash;> IO.puts &ldquo;Fizz&rdquo;
+  {</em>, 0, <em>} &ndash;> IO.puts &ldquo;Buzz&rdquo;
+  {</em>, _, n} &ndash;> IO.puts n
+end</p>
+
+<p>is_fizz_buzz = fn
+  (n) &ndash;> fizz_buzz.({rem(n,3), rem(n,5), n})
+end</p>
+
+<p>is_fizz_buzz.(10)
+is_fizz_buzz.(11)
+is_fizz_buzz.(12)
+is_fizz_buzz.(13)
+is_fizz_buzz.(14)
+is_fizz_buzz.(15)
+is_fizz_buzz.(16)
+```
+Can you guess what the output is?</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Elixir Pattern Matching]]></title>
     <link href="http://brain64bit.github.io/blog/2015/07/02/elixir-pattern-matching/"/>
     <updated>2015-07-02T22:27:48+07:00</updated>
     <id>http://brain64bit.github.io/blog/2015/07/02/elixir-pattern-matching</id>
-    <content type="html"><![CDATA[<p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, its success if both are equal. Lets see simple example:</p>
+    <content type="html"><![CDATA[<p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, it&rsquo;s success if both are equal. Lets see simple example:</p>
 
 <p>```elixir
 iex(1)> foo = &lsquo;bar&rsquo;
@@ -37,7 +100,7 @@ iex(4)> &lsquo;baz&rsquo; = foo
 <!--MORE-->
 
 
-<p><code>'bar' = foo</code> is valid because both left &amp; right side are equal to &lsquo;bar&rsquo;. But in the line 3, when the sides don&rsquo;t match its raise <strong>MatchError</strong>. From above example, variable can only be assigned on the left side.</p>
+<p><code>'bar' = foo</code> is valid because both left &amp; right side are equal to &lsquo;bar&rsquo;. But in the line 3, when the sides don&rsquo;t match it&rsquo;s raise <strong>MatchError</strong>. From above example, variable can only be assigned on the left side.</p>
 
 <p>```elixir
 iex(10)> list = [1,[2,3],4]

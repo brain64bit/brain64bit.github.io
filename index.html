@@ -9,7 +9,13 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="In Elixir pattern matching can be done using = operator, the equal sign compares left-hand side variable with right-hand side variable, its success &hellip;">
+  <meta name="description" content="In Elixir we can create anonymous function like in javascript, use fn keyword to define an anonymous function. 1
+2
+3
+4
+5
+fn parameters -&gt; body
+end &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,6 +80,64 @@
   <header>
   
     
+      <h1 class="entry-title"><a href="/blog/2015/07/03/elixir-anonymous-function/">Elixir Anonymous Function</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-03T01:08:21+07:00" pubdate data-updated="true">Jul 3<span>rd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Elixir we can create anonymous function like in javascript, use <strong>fn</strong> keyword to define an anonymous function.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="k">fn</span>
+</span><span class='line'>  <span class="n">parameters</span> <span class="o">-&gt;</span> <span class="n">body</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">fn</span> <span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">body</span> <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Variable can be assigned by anonymous function, and you can call it using <code>variable_name.(arg1, arg2)</code> for example, below is a simple anonymous function that bind into a variable.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/03/elixir-anonymous-function/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+  
+    
       <h1 class="entry-title"><a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a></h1>
       
       
@@ -98,7 +162,7 @@
   </header>
 
 
-  <div class="entry-content"><p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, its success if both are equal. Lets see simple example:</p>
+  <div class="entry-content"><p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, it&rsquo;s success if both are equal. Lets see simple example:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -308,65 +372,6 @@ These events also can be listen, so you can provide logic easily around file upl
 
     </article>
   
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick on OSX Yosemite</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-08T23:53:22+07:00" pubdate data-updated="true">Jan 8<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So i&rsquo;ve problem when installing rmagick gem in macosx yosemite, although i&rsquo;ve installed imagemagick on my system.
-The problem exists when bundler try to install rmagick gem and having trouble finding <strong>MagickWand.h</strong> for building native extension.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Can<span class="s1">&#39;t install RMagick 2.13.2. Can&#39;</span>t find MagickWand.h.
-</span><span class='line'>*** extconf.rb failed ***
-</span><span class='line'>Could not create Makefile due to some reason, probably lack of necessary
-</span><span class='line'>libraries and/or headers.  Check the mkmf.log file <span class="k">for </span>more details.  You may
-</span><span class='line'>need configuration options.
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -382,6 +387,10 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/03/elixir-anonymous-function/">Elixir Anonymous Function</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a>
       </li>
     
@@ -395,10 +404,6 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
     
       <li class="post">
         <a href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Progressbar Upload with Refile Gem</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick On OSX Yosemite</a>
       </li>
     
   </ul>
