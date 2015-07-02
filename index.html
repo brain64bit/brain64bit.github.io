@@ -172,8 +172,12 @@ For example in my apps there is a feature to reset password, which is of course 
 <p>For securing the reset password link it must supply a params called <strong>reset_password_token</strong>. The problem found when the reset password link doesnt
 work, because its always wrong redirect. Can you spot the problem ?.</p>
 
-<pre><code>&lt;a href="http://example.com/users/password/edit?reset_password_to%20ken=asdf1234"&gt;change password&lt;/a&gt;
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;http://example.com/users/password/edit?reset_password_to%20ken=asdf1234&quot;</span><span class="nt">&gt;</span>change password<span class="nt">&lt;/a&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 </div>
   
