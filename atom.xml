@@ -4,7 +4,7 @@
   <title><![CDATA[devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-06-30T22:04:25+07:00</updated>
+  <updated>2015-07-02T22:38:37+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Elixir Pattern Matching]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/07/02/elixir-pattern-matching/"/>
+    
+    <updated>2015-07-02T22:27:48+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/07/02/elixir-pattern-matching</id>
+    
+    <content type="html"><![CDATA[<p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, its success if both are equal. Lets see simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;baz&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="o">**</span> <span class="p">(</span><span class="no">MatchError</span><span class="p">)</span> <span class="n">no</span> <span class="n">match</span> <span class="n">of</span> <span class="n">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="ss">value:</span> <span class="s1">&#39;bar&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;baz&#39;</span>
+</span><span class='line'><span class="s1">&#39;baz&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;baz&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="s1">&#39;baz&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!--MORE-->
+
+
+<p><code>'bar' = foo</code> is valid because both left &amp; right side are equal to &lsquo;bar&rsquo;. But in the line 3, when the sides don&rsquo;t match its raise <strong>MatchError</strong>. From above example, variable can only be assigned on the left side.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">10</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="m">1</span><span class="p">,[</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">],</span><span class="m">4</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="p">[</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">],</span> <span class="m">4</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">11</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span>
+</span><span class='line'><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="p">[</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">],</span> <span class="m">4</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">12</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">13</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">[</span><span class="m">2</span><span class="p">,</span><span class="m">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+</span><span class='line'><span class="o">**</span> <span class="p">(</span><span class="no">MatchError</span><span class="p">)</span> <span class="n">no</span> <span class="n">match</span> <span class="n">of</span> <span class="n">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="ss">value:</span> <span class="p">[</span><span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">13</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">x</span>
+</span><span class='line'><span class="m">1</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">14</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">z</span>
+</span><span class='line'><span class="m">4</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">15</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A pattern (the left side) is matched if the values (the right side) have the same structure and if each term in the pattern can be matched to the corresponding term in the values.</p>
+
+<p>Also, you can ignoring a value when assignment with <strong>underscore</strong> operator &lsquo;_&rsquo;. It&rsquo;s useful when we didn&rsquo;t need to capture a value during assignment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">19</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">_</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">a</span>
+</span><span class='line'><span class="m">1</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">21</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another feature that exist in elixir pattern matching is <strong>caret</strong> ^ operator. It&rsquo;s useful if you want to force to Elixir to use existing value or you don&rsquo;t want to rebinding a variable. Just prefix a variable with ^ to use existing value.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">30</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">z</span> <span class="o">=</span> <span class="m">5</span>
+</span><span class='line'><span class="m">5</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">31</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">^</span><span class="n">z</span><span class="p">,</span> <span class="m">6</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="m">5</span><span class="p">,</span> <span class="m">6</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">32</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Ref:</strong></p>
+
+<ul>
+<li><a href="http://elixir-lang.org/getting-started/pattern-matching.html">Elixir Pattern Matching</a></li>
+</ul>
+
+]]></content>
+    
+  </entry>
   
   <entry>
     

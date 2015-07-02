@@ -9,11 +9,7 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="In this post i want to share my experience in implementing Carrierwave for tableless model, for example i&rsquo;ve model User : 1
-2
-3
-4
-class User &hellip;">
+  <meta name="description" content="Ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value. For example inject method useful &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +67,58 @@ class User &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+  
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/18/ruby-inject-method/">Ruby Inject Method</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-18T07:23:14+07:00" pubdate data-updated="true">Mar 18<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
+
+<p>For example inject method useful for accumulation in one dimensional array :</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">){</span> <span class="o">|</span><span class="n">initial_variable</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">+</span> <span class="n">initial_variable</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/18/ruby-inject-method/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -192,6 +240,10 @@ pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/cer
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra &#8216;\n&#8217; inside rails mailer template</a>
       </li>
     
@@ -205,10 +257,6 @@ pycurl.error: (60, 'server certificate verification failed. CAfile: /etc/ssl/cer
     
       <li class="post">
         <a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick On OSX Yosemite</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/18/ruby-inject-method/">ruby inject method</a>
       </li>
     
   </ul>

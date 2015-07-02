@@ -9,8 +9,7 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
-For example in my apps there is &hellip;">
+  <meta name="description" content="In Elixir pattern matching can be done using = operator, the equal sign compares left-hand side variable with right-hand side variable, its success &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +67,74 @@ For example in my apps there is &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+  
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-02T22:27:48+07:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Elixir pattern matching can be done using <strong>=</strong> operator, the equal sign compares left-hand side variable with right-hand side variable, its success if both are equal. Lets see simple example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;bar&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="s1">&#39;bar&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;baz&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="o">**</span> <span class="p">(</span><span class="no">MatchError</span><span class="p">)</span> <span class="n">no</span> <span class="n">match</span> <span class="n">of</span> <span class="n">right</span> <span class="n">hand</span> <span class="n">side</span> <span class="ss">value:</span> <span class="s1">&#39;bar&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">foo</span> <span class="o">=</span> <span class="s1">&#39;baz&#39;</span>
+</span><span class='line'><span class="s1">&#39;baz&#39;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="o">&gt;</span> <span class="s1">&#39;baz&#39;</span> <span class="o">=</span> <span class="n">foo</span>
+</span><span class='line'><span class="s1">&#39;baz&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/02/elixir-pattern-matching/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -296,58 +363,6 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/18/ruby-inject-method/">Ruby Inject Method</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-18T07:23:14+07:00" pubdate data-updated="true">Mar 18<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Ruby inject method is useful for combining an element inside enumerable, with binary operation and initial value.</p>
-
-<p>For example inject method useful for accumulation in one dimensional array :</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">){</span> <span class="o">|</span><span class="n">initial_variable</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">+</span> <span class="n">initial_variable</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>from above operation, 0 in inject argument is initial value of <strong>initial_variable</strong> if you forget to specify an argument in inject method by default first element in enumerable will be used as initial value.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/03/18/ruby-inject-method/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -363,6 +378,10 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra &#8216;\n&#8217; inside rails mailer template</a>
       </li>
     
@@ -376,10 +395,6 @@ The problem exists when bundler try to install rmagick gem and having trouble fi
     
       <li class="post">
         <a href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/">Install Rmagick On OSX Yosemite</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/18/ruby-inject-method/">ruby inject method</a>
       </li>
     
   </ul>

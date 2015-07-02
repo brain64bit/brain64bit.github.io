@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Extra '\n' inside rails mailer template - devblog of @sgt_mactavish</title>
+  <title>Category: elixir - devblog of @sgt_mactavish</title>
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
-For example in my apps there is &hellip;">
+  <meta name="description" content="Category: elixir">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ For example in my apps there is &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template">
+  <link rel="canonical" href="http://brain64bit.github.ioblog/categories/elixir">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
@@ -67,111 +66,31 @@ For example in my apps there is &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-  
-    
-      <h1 class="entry-title">Extra '\n' Inside Rails Mailer Template</h1>
-    
-  
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-29T00:21:02+07:00" pubdate data-updated="true">Apr 29<span>th</span>, 2015</time>
-        
-      </p>
+    <h1 class="entry-title">Category: Elixir</h1>
     
   </header>
-
-
-<div class="entry-content"><p>When i work with the email stuff, i accidentally found problem when email template was already sent by Mandrill SMTP.
-For example in my apps there is a feature to reset password, which is of course inside the email contains <strong>reset password</strong> link.</p>
-
-<p>For securing the reset password link it must supply a params called <strong>reset_password_token</strong>. The problem found when the reset password link doesnt
-work, because its always wrong redirect. Can you spot the problem ?.</p>
-
-<pre><code>&lt;a href="http://example.com/users/password/edit?reset_password_to%20ken=asdf1234"&gt;change password&lt;/a&gt;
-</code></pre>
-
-<!-- MORE -->
-
-
-<p>Accidentally the links params contains extra <strong>\n</strong>. This kind of issue with html frameworks that generate HTML with no true line breaks.
-Based on <a href="https://www.ietf.org/rfc/rfc5321.txt">rfc5321</a> <strong>4.5.3.1.6.  Text Line</strong> its state :</p>
-
-<blockquote><p>The maximum total length of a text line including the <CRLF> is 1000
-octets (not counting the leading dot duplicated for transparency).</p></blockquote>
-
-<p>Hell yeah because i&rsquo;m using SLIM for mailer template, in production SLIM compiles as a single-line by default <code>pretty: false</code> for optimization.
-We can solve it by toggle the <strong>pretty</strong> option to true, see <a href="http://www.rubydoc.info/gems/slim/frames#Configuring_Slim">slim config</a>.</p>
-
-<p>But this kind of solution will be sacrifice to other page except the mailer template not being optimized.
-Instead using slim for mailer template, just use <strong>ERB</strong> so it will break every new line.</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2015</h2>
 
-
-<time datetime="2015-04-29T00:21:02+07:00" pubdate data-updated="true">Apr 29<span>th</span>, 2015</time>
-      
-
-
-    </p>
-    
-      <div class="sharing">
+<article>
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/" >Tweet</a>
-  
-  
-  
-</div>
+<h1><a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a></h1>
+<time datetime="2015-07-02T22:27:48+07:00" pubdate><span class='month'>July</span> <span class='day'>02</span> <span class='year'>2015</span></time>
 
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/" title="Previous Post: Problem using ActiveRecord #exists? in eager load resultset">&laquo; Problem using ActiveRecord #exists? in eager load resultset</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2015/07/02/elixir-pattern-matching/" title="Next Post: Elixir Pattern Matching">Elixir Pattern Matching &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -257,10 +176,7 @@ Instead using slim for mailer template, just use <strong>ERB</strong> so it will
       var disqus_shortname = 'minified';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/';
-        var disqus_url = 'http://brain64bit.github.io/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
