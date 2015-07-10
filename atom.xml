@@ -4,7 +4,7 @@
   <title><![CDATA[devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-07-03T01:14:20+07:00</updated>
+  <updated>2015-07-11T00:44:45+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -12,6 +12,120 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Elixir Functional Form]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/07/11/elixir-functional-form/"/>
+    
+    <updated>2015-07-11T00:39:18+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/07/11/elixir-functional-form</id>
+    
+    <content type="html"><![CDATA[<p>I am still exploring Elixir anonymous function, let&rsquo;s move on to another interesting feature. Like javascript or functional programming language, in Elixir we can writes function that <strong>takes one or more functions as an input</strong> and or <strong>returns a function</strong>,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">passed_func</span> <span class="o">=</span> <span class="k">fn</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="m">3</span> <span class="k">end</span>
+</span><span class='line'><span class="c1">#Function&lt;6.90072148/1 in :erl_eval.expr/5&gt;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">apply_func</span> <span class="o">=</span> <span class="k">fn</span><span class="p">(</span><span class="n">func_arg</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">func_arg</span><span class="o">.</span><span class="p">(</span><span class="n">func_arg</span><span class="o">.</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="k">end</span>
+</span><span class='line'><span class="c1">#Function&lt;12.90072148/2 in :erl_eval.expr/5&gt;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">apply_func</span><span class="o">.</span><span class="p">(</span><span class="n">passed_func</span><span class="p">,</span> <span class="m">7</span><span class="p">)</span>
+</span><span class='line'><span class="m">13</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We have <strong>passed_func</strong> which is a function that returns a function, and <strong>apply_func</strong> which is takes function as an argument. Inside apply_func we apply passed_func twice.</p>
+
+<!--MORE-->
+
+
+<p>Like Ruby, inside Elixir Enum module has a function called map which has the same purpose, different with Ruby, in Elixir the map function takes two arguments, first is a collection and second is a function.</p>
+
+<p><strong>ruby way:</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">001</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">002</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="o">|</span><span class="n">el</span><span class="o">|</span> <span class="n">el</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="o">]</span>
+</span><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">003</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>elixir way</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">5</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">5</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">6</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">map</span> <span class="n">list</span><span class="p">,</span> <span class="k">fn</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">el</span> <span class="o">*</span> <span class="m">2</span> <span class="k">end</span>
+</span><span class='line'><span class="p">[</span><span class="m">2</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">6</span><span class="p">,</span> <span class="m">8</span><span class="p">,</span> <span class="m">10</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The &amp; Shortcut</h2>
+
+<p>Again like a Ruby, Elixir has &amp; operator to write short function. The body of the function surrounded by ( and ), and the the placeholders &amp;1, &amp;2, and so on correspond to the first, second, and subsequent parameters of the function.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">add</span> <span class="o">=</span> <span class="err">&amp;</span><span class="p">(</span><span class="nv">&amp;1</span> <span class="o">+</span> <span class="nv">&amp;2</span><span class="p">)</span>
+</span><span class='line'><span class="err">&amp;</span><span class="ss">:erlang</span><span class="o">.+/</span><span class="m">2</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">add</span><span class="o">.</span><span class="p">(</span><span class="m">9</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span><span class='line'><span class="m">13</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This shortcut function can be applied in map function:</p>
+
+<p><strong>ruby way</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">00</span><span class="mi">9</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="sx">%w&lt;a b c d e&gt;</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="o">]</span>
+</span><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">010</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:upcase</span><span class="p">)</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="o">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="o">]</span>
+</span><span class='line'><span class="n">irb</span><span class="p">(</span><span class="n">main</span><span class="p">):</span><span class="mo">011</span><span class="p">:</span><span class="mi">0</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>elixir way</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">7</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">]</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">8</span><span class="p">)</span><span class="o">&gt;</span> <span class="no">Enum</span><span class="o">.</span><span class="n">map</span> <span class="n">list</span><span class="p">,</span> <span class="err">&amp;</span><span class="p">(</span><span class="no">String</span><span class="o">.</span><span class="n">upcase</span><span class="p">(</span><span class="nv">&amp;1</span><span class="p">))</span>
+</span><span class='line'><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+    
+  </entry>
   
   <entry>
     

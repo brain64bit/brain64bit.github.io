@@ -9,13 +9,7 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="In Elixir we can create anonymous function like in javascript, use fn keyword to define an anonymous function. 1
-2
-3
-4
-5
-fn parameters -&gt; body
-end &hellip;">
+  <meta name="description" content="I am still exploring Elixir anonymous function, let&rsquo;s move on to another interesting feature. Like javascript or functional programming &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -73,6 +67,68 @@ end &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+  
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/11/elixir-functional-form/">Elixir Functional Form</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-11T00:39:18+07:00" pubdate data-updated="true">Jul 11<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am still exploring Elixir anonymous function, let&rsquo;s move on to another interesting feature. Like javascript or functional programming language, in Elixir we can writes function that <strong>takes one or more functions as an input</strong> and or <strong>returns a function</strong>,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='elixir'><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">passed_func</span> <span class="o">=</span> <span class="k">fn</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="m">3</span> <span class="k">end</span>
+</span><span class='line'><span class="c1">#Function&lt;6.90072148/1 in :erl_eval.expr/5&gt;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">apply_func</span> <span class="o">=</span> <span class="k">fn</span><span class="p">(</span><span class="n">func_arg</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">func_arg</span><span class="o">.</span><span class="p">(</span><span class="n">func_arg</span><span class="o">.</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="k">end</span>
+</span><span class='line'><span class="c1">#Function&lt;12.90072148/2 in :erl_eval.expr/5&gt;</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">apply_func</span><span class="o">.</span><span class="p">(</span><span class="n">passed_func</span><span class="p">,</span> <span class="m">7</span><span class="p">)</span>
+</span><span class='line'><span class="m">13</span>
+</span><span class='line'><span class="n">iex</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We have <strong>passed_func</strong> which is a function that returns a function, and <strong>apply_func</strong> which is takes function as an argument. Inside apply_func we apply passed_func twice.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/07/11/elixir-functional-form/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -318,60 +374,6 @@ But somehow its produce weird error when calls <strong>user.latest_title</strong
 
     </article>
   
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Progressbar Upload With Refile Gem</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-03T23:30:07+07:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
-One of features that i like is built in javascript library, which is contains several custom DOM events.
-These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
-
-<p>By default refile provide helpers to built UI element of file input field:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -387,6 +389,10 @@ These events also can be listen, so you can provide logic easily around file upl
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/11/elixir-functional-form/">Elixir Functional Form</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/03/elixir-anonymous-function/">Elixir Anonymous Function</a>
       </li>
     
@@ -400,10 +406,6 @@ These events also can be listen, so you can provide logic easily around file upl
     
       <li class="post">
         <a href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/">Problem using ActiveRecord #exists? in eager load resultset</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/03/progressbar-upload-with-refile-gem/">Progressbar Upload with Refile Gem</a>
       </li>
     
   </ul>
