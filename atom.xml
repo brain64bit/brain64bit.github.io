@@ -4,7 +4,7 @@
   <title><![CDATA[devblog of @sgt_mactavish]]></title>
   <link href="http://brain64bit.github.io/atom.xml" rel="self"/>
   <link href="http://brain64bit.github.io/"/>
-  <updated>2015-07-11T00:52:15+07:00</updated>
+  <updated>2015-08-19T23:39:38+07:00</updated>
   <id>http://brain64bit.github.io/</id>
   <author>
     <name><![CDATA[@sgt_mactavish]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    
+    <title type="html"><![CDATA[Tightening controller test]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/"/>
+    
+    <updated>2015-08-19T21:41:25+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test</id>
+    
+    <content type="html"><![CDATA[<h2>Problem</h2>
+
+<p>One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="no">Book</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive_message_chain</span><span class="p">(</span><span class="ss">:published</span><span class="p">,</span> <span class="ss">:latest</span><span class="p">,</span> <span class="ss">:limit</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="ss">:published</span>
+</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">get</span> <span class="ss">:index</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After a while, i realized this tests are trying to assert query invoked in an <strong>index</strong> action. Unfortunately at first sight it doesn&rsquo;t have a clear intent about what we are going to test.</p>
+
+<!--more-->
+
+
+<p>Besides that this test is not integrated with the views that will be rendered. The test still pass against this code below, if we forgot to supply view variable:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">index</span>
+</span><span class='line'>  <span class="n">books</span> <span class="o">=</span> <span class="no">Book</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">latest</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># view need @books</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, we have a weak controller test.</p>
+
+<h2>Solution</h2>
+
+<p>I think there are two solutions, first is refactor the controller test to be more clear intent and tight, second is tell a controller example to render views.</p>
+
+<ul>
+<li>We can apply arrange-act-assert (AAA) pattern for this test and add more assertion. AAA is simple concept: setup context &ndash;> execute thing &ndash;> verify expected behavior.</li>
+<li>Tell controller example to render view using <strong>render_views</strong> method and add more assertion with view.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span><span class="p">,</span> <span class="ss">:focus</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">render_views</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># arrange</span>
+</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:published_book</span><span class="p">){</span> <span class="n">create</span> <span class="ss">:book</span><span class="p">,</span> <span class="ss">:published</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:unpublished_book</span><span class="p">){</span> <span class="n">create</span> <span class="ss">:book</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># act</span>
+</span><span class='line'>    <span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">get</span> <span class="ss">:index</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># assertion</span>
+</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;response ok &amp; render correct view&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span> <span class="ss">:ok</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">render_template</span> <span class="ss">:index</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;query latest published books&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">assigns</span><span class="p">(</span><span class="ss">:books</span><span class="p">))</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;contain only published book title&quot;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span><span class="o">.</span><span class="n">title</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">not_to</span> <span class="kp">include</span> <span class="n">unpublished_book</span><span class="o">.</span><span class="n">title</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+    
+  </entry>
   
   <entry>
     

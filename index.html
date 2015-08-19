@@ -9,7 +9,17 @@
   <meta name="author" content="@sgt_mactavish">
 
   
-  <meta name="description" content="I am still exploring Elixir anonymous function, let&rsquo;s move on to another interesting feature. Like javascript or functional programming &hellip;">
+  <meta name="description" content="Problem One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +77,78 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+  
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/19/tightening-controller-test/">Tightening Controller Test</a></h1>
+      
+      
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-19T21:41:25+07:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Problem</h2>
+
+<p>One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="no">Book</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive_message_chain</span><span class="p">(</span><span class="ss">:published</span><span class="p">,</span> <span class="ss">:latest</span><span class="p">,</span> <span class="ss">:limit</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="ss">:published</span>
+</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">get</span> <span class="ss">:index</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After a while, i realized this tests are trying to assert query invoked in an <strong>index</strong> action. Unfortunately at first sight it doesn&rsquo;t have a clear intent about what we are going to test.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/08/19/tightening-controller-test/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -310,70 +392,6 @@ work, because its always wrong redirect. Can you spot the problem ?.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-  
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/">Problem Using ActiveRecord #exists? In Eager Load Resultset</a></h1>
-      
-      
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-20T19:16:20+07:00" pubdate data-updated="true">Mar 20<span>th</span>, 2015</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>So few weeks ago i&rsquo;ve got problem in a rails apps. New Relic reports about 500 error, where the main cause is <strong>accessing method in nil object</strong>.
-Here is code snippet, causing the error :</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:posts</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">order</span> <span class="s2">&quot;created_at DESC&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">latest_title</span>
-</span><span class='line'>    <span class="n">posts</span><span class="o">.</span><span class="n">exists?</span> <span class="o">&amp;&amp;</span> <span class="n">posts</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">title</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>From the code above, user object have a method <strong>latest_title</strong> it just check if user has posts and fetch the first post&rsquo;s title.
-But somehow its produce weird error when calls <strong>user.latest_title</strong>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -389,6 +407,10 @@ But somehow its produce weird error when calls <strong>user.latest_title</strong
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/08/19/tightening-controller-test/">Tightening controller test</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/11/elixir-functional-form/">Elixir Functional Form</a>
       </li>
     
@@ -402,10 +424,6 @@ But somehow its produce weird error when calls <strong>user.latest_title</strong
     
       <li class="post">
         <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra &#8216;\n&#8217; inside rails mailer template</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/">Problem using ActiveRecord #exists? in eager load resultset</a>
       </li>
     
   </ul>

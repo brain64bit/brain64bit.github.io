@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tdd | devblog of @sgt_mactavish]]></title>
+  <link href="http://brain64bit.github.io/blog/categories/tdd/atom.xml" rel="self"/>
+  <link href="http://brain64bit.github.io/"/>
+  <updated>2015-08-19T23:39:38+07:00</updated>
+  <id>http://brain64bit.github.io/</id>
+  <author>
+    <name><![CDATA[@sgt_mactavish]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tightening controller test]]></title>
+    <link href="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/"/>
+    <updated>2015-08-19T21:41:25+07:00</updated>
+    <id>http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test</id>
+    <content type="html"><![CDATA[<h2>Problem</h2>
+
+<p>One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:</p>
+
+<p>```ruby
+describe BooksController, type: :controller do
+  describe &ldquo;GET #index&rdquo; do</p>
+
+<pre><code>before do
+  expect(Book).to receive_message_chain(:published, :latest, :limit).with(10)
+  create_list :book, 5, :published
+  create_list :book, 3
+end
+
+it { get :index }
+</code></pre>
+
+<p>  end
+end
+```
+After a while, i realized this tests are trying to assert query invoked in an <strong>index</strong> action. Unfortunately at first sight it doesn&rsquo;t have a clear intent about what we are going to test.</p>
+
+<!--more-->
+
+
+<p>Besides that this test is not integrated with the views that will be rendered. The test still pass against this code below, if we forgot to supply view variable:</p>
+
+<p><code>ruby
+def index
+  books = Book.published.latest.limit(10) # view need @books
+end
+</code>
+Ok, we have a weak controller test.</p>
+
+<h2>Solution</h2>
+
+<p>I think there are two solutions, first is refactor the controller test to be more clear intent and tight, second is tell a controller example to render views.</p>
+
+<ul>
+<li>We can apply arrange-act-assert (AAA) pattern for this test and add more assertion. AAA is simple concept: setup context &ndash;> execute thing &ndash;> verify expected behavior.</li>
+<li>Tell controller example to render view using <strong>render_views</strong> method and add more assertion with view.</li>
+</ul>
+
+
+<p>```ruby
+describe BooksController, type: :controller do
+  describe &ldquo;GET #index&rdquo;, :focus do</p>
+
+<pre><code>render_views
+
+# arrange
+let!(:published_book){ create :book, :published }
+let!(:unpublished_book){ create :book }
+
+# act
+before do
+  get :index
+end
+
+# assertion
+it "response ok &amp; render correct view" do
+  expect(response).to have_http_status :ok
+  expect(response).to render_template :index
+end
+
+it "query latest published books" do
+  expect(assigns(:books)).to include published_book
+end
+
+it "contain only published book title" do
+  expect(response.body).to include published_book.title
+  expect(response.body).not_to include unpublished_book.title
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+]]></content>
+  </entry>
+  
+</feed>
