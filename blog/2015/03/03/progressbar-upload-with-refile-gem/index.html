@@ -1,384 +1,237 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+  <head>
   <meta charset="utf-8">
-  <title>Progressbar Upload with Refile Gem - devblog of @sgt_mactavish</title>
-  <meta name="author" content="@sgt_mactavish">
+  <!-- (1) Optimize for mobile versions: http://goo.gl/EOpFl -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- (1) force latest IE rendering engine: bit.ly/1c8EiC9 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  
-  <meta name="description" content="There is a ruby gem library for file upload called refile.
-One of features that i like is built in javascript library, which is contains several &hellip;">
-  
+  <title>Progressbar Upload with Refile Gem</title>
+  <meta name="description" content="<p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
+One of features that i like is built in javascript library, which is contains several custom DOM events.
+These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
+" />
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
-  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
   
+  <meta property="og:site_name" content="devblog of @sgt_mactavish" />
+  <meta property="og:title" content="Progressbar Upload with Refile Gem"/>
+  
+  <meta property="og:description" content="There is a ruby gem library for file upload called refile.One of features that i like is built in javascript library, which is contains several custom DOM events.These events also can be listen, so..." />
+  
+  <meta property="og:image" content="http://brain64bit.github.io/assets/images/avatar.jpg" />
+  <meta property="og:url" content="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/" >
+  <meta property="og:type" content="blog" />
+  <meta property="article:published_time" content="2015-03-03T23:30:07+07:00">
 
+  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/">
+
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Linux+Libertine:400,400i,700,700i/Open+Sans:400,400i,700,700i">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
+  <link href='/stylesheets/all-785c40066671a7d4f0f5cb6210726e97.css' media='all' rel='stylesheet' type='text/css'>
 </head>
+  <body itemscope itemtype="http://schema.org/Article">
+    <!-- header start -->
 
-<body   class="collapse-sidebar sidebar-footer" >
-  <header role="banner">
-	<div class="header-title"><a href="/">devblog of @sgt_mactavish</a></div>
+<a href="/" class="logo-readium"><span class="logo" style="background-image: url(/assets/images/home.png)"></span></a>
 
-
-	<br><div class="header-subtitle">my development.log & random thoughts</div>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:brain64bit.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/blog/categories">Categories</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about">About</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-  
-    
-      <h1 class="entry-title">Progressbar Upload With Refile Gem</h1>
-    
-  
-    
-      <p class="meta">
+<!-- header end -->
+    <main class="content" role="main">
+      <article class="post">
         
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-03T23:30:07+07:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2015</time>
+        <div class="noarticleimage">
+          <div class="post-meta">
+            <h1 class="post-title">Progressbar Upload with Refile Gem</h1>
+            <div class="cf post-meta-text">
+              <div class="author-image" style="background-image: url(/assets/images/avatar.jpg)">Blog Logo</div>
+              <h4 class="author-name" itemprop="author" itemscope itemtype="http://schema.org/Person"></h4>
+              on
+              <time datetime="2015-03-03T23:30:07+07:00">03 Mar 2015</time>
+              <!-- , tagged on <span class="post-tag-">, <a href="/tag/"></a></span> -->
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
         
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
+        <section class="post-content">
+          <div class="post-reading">
+            <span class="post-reading-time"></span> read
+          </div>
+          <a name="topofpage"></a>
+          <p>There is a ruby gem library for file upload called <a href="https://github.com/refile/refile">refile</a>.
 One of features that i like is built in javascript library, which is contains several custom DOM events.
 These events also can be listen, so you can provide logic easily around file upload lifecycle process.</p>
 
 <p>By default refile provide helpers to built UI element of file input field:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span></div></div></pre></div></figure></p>
 
+<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.
+<figure class='code-highlight-figure'><figcaption class='code-highlight-caption'><span class='code-highlight-caption-title'>MORE</span></figcaption><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span></div></div></pre></div></figure></p>
 
-<p>From that snippet above refile won&rsquo;t use built in javascript, to enable it just add an option called <strong>direct</strong> with true.</p>
+<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:start&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)&#x7b;&#x7d;);</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)&#x7b;&#x7d;);</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:success&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)&#x7b;&#x7d;);</span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:complete&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)&#x7b;&#x7d;);</span>
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:failure&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)&#x7b;&#x7d;);</span></div></div></pre></div></figure></p>
 
-<!-- MORE -->
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Refile provide several events which can attached into form upload element, for attaching the events you can use <strong>addEventListener</strong> :</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:start&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
-</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
-</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:success&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
-</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:complete&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
-</span><span class='line'><span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:failure&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">){});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">=</span> <span class="n">form_for</span> <span class="vi">@object</span><span class="p">,</span> <span class="ss">html</span><span class="p">:</span> <span class="p">{</span><span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-horizontal&#39;</span><span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">form</span><span class="o">-</span><span class="n">group</span>
-</span><span class='line'>    <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;col-sm-3 control-label&#39;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">col</span><span class="o">-</span><span class="n">sm</span><span class="o">-</span><span class="mi">7</span>
-</span><span class='line'>      <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'>      <span class="c1">#progress-bar-container.hidden</span>
-</span><span class='line'>        <span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">striped</span>
-</span><span class='line'>          <span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">-</span><span class="n">info</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width: 0%&quot;</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p>Because we focused only progressbar upload, lets construct the form to using twitter bootstrap&rsquo;s progressbar, currently i&rsquo;m using slim-template for view.
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="o">=</span> <span class="n">form_for</span> <span class="vi">@object</span><span class="p">,</span> <span class="ss">html</span><span class="p">:</span> <span class="p">&#x7b;</span><span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-horizontal&#39;</span><span class="p">&#x7d;</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="o">.</span><span class="n">form</span><span class="o">-</span><span class="n">group</span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;col-sm-3 control-label&#39;</span>
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="o">.</span><span class="n">col</span><span class="o">-</span><span class="n">sm</span><span class="o">-</span><span class="mi">7</span>
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">attachment_field</span> <span class="ss">:file_field</span><span class="p">,</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span><span class="p">,</span> <span class="ss">direct</span><span class="p">:</span> <span class="kp">true</span>
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="c1">#progress-bar-container.hidden</span>
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'>        <span class="o">.</span><span class="n">progress</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">striped</span>
+</div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>          <span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">.</span><span class="n">progress</span><span class="o">-</span><span class="n">bar</span><span class="o">-</span><span class="n">info</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;width: 0%&quot;</span>
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="o">.</span><span class="n">.</span><span class="o">.</span></div></div></pre></div></figure></p>
 
 <p>Next lets write the javascript for calculate the progress and manipulate the UI progressbar.
-We can utilize <strong>upload:progress</strong> event for this purpose.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">FileUploader</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
-</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">doProgress</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
-</span><span class='line'>  <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">doProgress</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">detail</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">percentage</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span> <span class="p">(</span><span class="nx">detail</span><span class="p">.</span><span class="nx">loaded</span> <span class="o">/</span> <span class="nx">detail</span><span class="p">.</span><span class="nx">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.progress-bar&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">percentage</span><span class="o">+</span><span class="s1">&#39;%&#39;</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">...</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>  <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">FileUploader</span><span class="p">).</span><span class="nx">init</span><span class="p">();</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
+We can utilize <strong>upload:progress</strong> event for this purpose.
+<figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">FileUploader</span> <span class="o">=</span> <span class="p">&#x7b;</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="nx">init</span><span class="o">:</span> <span class="kd">function</span><span class="p">()&#x7b;</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">);</span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="nx">form</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;upload:progress&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)&#x7b;</span>
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="k">this</span><span class="p">.</span><span class="nx">doProgress</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="p">&#x7d;.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="p">&#x7d;,</span>
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="nx">doProgress</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)&#x7b;</span>
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="kd">var</span> <span class="nx">detail</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">;</span>
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="kd">var</span> <span class="nx">percentage</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span> <span class="p">(</span><span class="nx">detail</span><span class="p">.</span><span class="nx">loaded</span> <span class="o">/</span> <span class="nx">detail</span><span class="p">.</span><span class="nx">total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.progress-bar&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="nx">percentage</span><span class="o">+</span><span class="s1">&#39;%&#39;</span><span class="p">);</span>
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="p">&#x7d;</span>
+</div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;</span>
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&hellip;</span>
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()&#x7b;</span>
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">FileUploader</span><span class="p">).</span><span class="nx">init</span><span class="p">();</span>
+</div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="p">&#x7d;);</span></div></div></pre></div></figure></p>
 
 <p>Finally this is our progressbar using refile gem, for more information you can read on <a href="https://github.com/refile/refile">refile</a>.</p>
-</div>
 
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-03T23:30:07+07:00" pubdate data-updated="true">Mar 3<span>rd</span>, 2015</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/01/08/install-rmagick-on-osx-yosemite/" title="Previous Post: Install Rmagick On OSX Yosemite">&laquo; Install Rmagick On OSX Yosemite</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2015/03/20/problem-using-activerecord-findermethods-number-exists-in-eager-load-resultset/" title="Next Post: Problem using ActiveRecord #exists? in eager load resultset">Problem using ActiveRecord #exists? in eager load resultset &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/tightening-controller-test/">Tightening controller test</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/11/elixir-functional-form/">Elixir Functional Form</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/03/elixir-anonymous-function/">Elixir Anonymous Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra '\n' inside rails mailer template</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/brain64bit">@brain64bit</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'brain64bit',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 -  @sgt_mactavish <br/>
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> + <a href="https://github.com/ioveracker/mnml">mnml</a>.
-	  
-  </span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'minified';
-      
+        </section>
+        <footer class="post-footer">
+          <section class="share">
+            
+              
+                <a class="icon-twitter" href="http://twitter.com/share?text=Progressbar+Upload+with+Refile+Gem&amp;url=http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem"
+                  onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
+                <i class="fa fa-twitter"></i><span class="hidden">twitter</span>
+                </a>
+              
+            
+              
+                <a class="icon-facebook" href="https://www.facebook.com/sharer.php?t=Progressbar+Upload+with+Refile+Gem&amp;u=http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem"
+                  onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+                <i class="fa fa-facebook"></i><span class="hidden">facebook</span>
+                </a>
+              
+            
+              
+            
+          </section>
+        </footer>
+        <div class="bottom-teaser cf">
+          <div class="isLeft">
+            <h5 class="index-headline featured"><span>Written by</span></h5>
+            <section class="author">
+              <div class="author-image" style="background-image: url(/assets/images/avatar.jpg)">Blog Logo</div>
+              <h4>Agung Prasetyo</h4>
+              <p class="bio"></p>
+              <hr>
+              <p class="published">Published <time datetime="2015-03-03 23:30">03 Mar 2015</time></p>
+            </section>
+          </div>
+          
+          <div class="isRight">
+            <h5 class="index-headline featured"><span>Supported by</span></h5>
+            <footer class="site-footer">
+              <section class="poweredby">Proudly published with <a href="http://jekyllrb.com"> Jekyll</a></section>
+              <a class="subscribe" href="/feed.xml"> <span class="tooltip"> <i class="fa fa-rss"></i> You should subscribe to my feed.</span></a>
+              <div class="inner">
+                <section class="copyright">All content copyright <a href="/">Agung Prasetyo</a> &copy; 2016<br>All rights reserved.</section>
+              </div>
+            </footer>
+          </div>
+        </div>
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/';
-        var disqus_url = 'http://brain64bit.github.io/blog/2015/03/03/progressbar-upload-with-refile-gem/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'minified'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        
+      </article>
+    </main>
+    <div class="bottom-closer">
+      <div class="background-closer-image"  style="background-image: url(/assets/images/1.jpg)">
+        Image
+      </div>
+      <div class="inner">
+        <h1 class="blog-title">devblog of @sgt_mactavish</h1>
+        <h2 class="blog-description"></h2>
+        <a href="/" class="btn">Back to Overview</a>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/assets/js/index.js"></script>
+<script type="text/javascript" src="/assets/js/readingTime.min.js"></script>
+<script>
+(function ($) {
+  "use strict";
+  $(document).ready(function(){
+
+    var $window = $(window),
+    $image = $('.post-image-image, .teaserimage-image');
+    
+      $window.on('scroll', function() {
+        var top = $window.scrollTop();
+
+        if (top < 0 || top > 1500) { return; }
+        $image
+          .css('transform', 'translate3d(0px, '+top/3+'px, 0px)')
+          .css('opacity', 1-Math.max(top/700, 0));
+      });
+      $window.trigger('scroll');
+
+      var height = $('.article-image').height();
+      $('.post-content').css('padding-top', height + 'px');
+
+      $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+         && location.hostname == this.hostname) {
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+          if (target.length) {
+            $('html,body').animate({ scrollTop: target.offset().top }, 500);
+            return false;
+          }
+        }
+      });
+
+  });
+}(jQuery));
 </script>
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>

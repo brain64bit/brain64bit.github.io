@@ -1,138 +1,88 @@
-
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
+<html>
+  <head>
   <meta charset="utf-8">
-  <title>Tightening controller test - devblog of @sgt_mactavish</title>
-  <meta name="author" content="@sgt_mactavish">
+  <!-- (1) Optimize for mobile versions: http://goo.gl/EOpFl -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- (1) force latest IE rendering engine: bit.ly/1c8EiC9 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  
-  <meta name="description" content="Problem One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand: 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11 &hellip;">
-  
+  <title>Tightening controller test</title>
+  <meta name="description" content="<h2>Problem</h2>
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<p>One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:</p>
+" />
 
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
-  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="devblog of @sgt_mactavish" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
   
+  <meta property="og:site_name" content="devblog of @sgt_mactavish" />
+  <meta property="og:title" content="Tightening controller test"/>
+  
+  <meta property="og:description" content="ProblemOne day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:" />
+  
+  <meta property="og:image" content="http://brain64bit.github.io/assets/images/avatar.jpg" />
+  <meta property="og:url" content="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/" >
+  <meta property="og:type" content="blog" />
+  <meta property="article:published_time" content="2015-08-19T21:41:25+07:00">
 
+  <link rel="canonical" href="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/">
+
+  <link rel="shortcut icon" href="/assets/images/favicon.ico">
+  <link rel="stylesheet" href="//brick.a.ssl.fastly.net/Linux+Libertine:400,400i,700,700i/Open+Sans:400,400i,700,700i">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css" />
+  <link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
+  <link href='/stylesheets/all-785c40066671a7d4f0f5cb6210726e97.css' media='all' rel='stylesheet' type='text/css'>
 </head>
+  <body itemscope itemtype="http://schema.org/Article">
+    <!-- header start -->
 
-<body   class="collapse-sidebar sidebar-footer" >
-  <header role="banner">
-	<div class="header-title"><a href="/">devblog of @sgt_mactavish</a></div>
+<a href="/" class="logo-readium"><span class="logo" style="background-image: url(/assets/images/home.png)"></span></a>
 
-
-	<br><div class="header-subtitle">my development.log & random thoughts</div>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:brain64bit.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Home</a></li>
-  <li><a href="/blog/categories">Categories</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="/about">About</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-  
-    
-      <h1 class="entry-title">Tightening Controller Test</h1>
-    
-  
-    
-      <p class="meta">
+<!-- header end -->
+    <main class="content" role="main">
+      <article class="post">
         
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-19T21:41:25+07:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
+        <div class="noarticleimage">
+          <div class="post-meta">
+            <h1 class="post-title">Tightening controller test</h1>
+            <div class="cf post-meta-text">
+              <div class="author-image" style="background-image: url(/assets/images/avatar.jpg)">Blog Logo</div>
+              <h4 class="author-name" itemprop="author" itemscope itemtype="http://schema.org/Person"></h4>
+              on
+              <time datetime="2015-08-19T21:41:25+07:00">19 Aug 2015</time>
+              <!-- , tagged on <span class="post-tag-">, <a href="/tag/"></a></span> -->
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
         
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><h2>Problem</h2>
+        <section class="post-content">
+          <div class="post-reading">
+            <span class="post-reading-time"></span> read
+          </div>
+          <a name="topofpage"></a>
+          <h2>Problem</h2>
 
 <p>One day i saw a snippet of code inside controller test, which is green and sadly is a little hard to understand:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="no">Book</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive_message_chain</span><span class="p">(</span><span class="ss">:published</span><span class="p">,</span> <span class="ss">:latest</span><span class="p">,</span> <span class="ss">:limit</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="ss">:published</span>
-</span><span class='line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">3</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">it</span> <span class="p">{</span> <span class="n">get</span> <span class="ss">:index</span> <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span> <span class="k">do</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">before</span> <span class="k">do</span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="no">Book</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">receive_message_chain</span><span class="p">(</span><span class="ss">:published</span><span class="p">,</span> <span class="ss">:latest</span><span class="p">,</span> <span class="ss">:limit</span><span class="p">)</span><span class="o">.</span><span class="n">with</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="ss">:published</span>
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">create_list</span> <span class="ss">:book</span><span class="p">,</span> <span class="mi">3</span>
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">end</span>
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">it</span> <span class="p">&#x7b;</span> <span class="n">get</span> <span class="ss">:index</span> <span class="p">&#x7d;</span>
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">end</span>
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">end</span></div></div></pre></div></figure></p>
 
 <p>After a while, i realized this tests are trying to assert query invoked in an <strong>index</strong> action. Unfortunately at first sight it doesn&rsquo;t have a clear intent about what we are going to test.</p>
 
@@ -141,14 +91,9 @@
 
 <p>Besides that this test is not integrated with the views that will be rendered. The test still pass against this code below, if we forgot to supply view variable:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">index</span>
-</span><span class='line'>  <span class="n">books</span> <span class="o">=</span> <span class="no">Book</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">latest</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># view need @books</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">def</span> <span class="nf">index</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">books</span> <span class="o">=</span> <span class="no">Book</span><span class="o">.</span><span class="n">published</span><span class="o">.</span><span class="n">latest</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># view need @books</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">end</span></div></div></pre></div></figure></p>
 
 <p>Ok, we have a weak controller test.</p>
 
@@ -157,244 +102,147 @@
 <p>I think there are two solutions, first is refactor the controller test to be more clear intent and tight, second is tell a controller example to render views.</p>
 
 <ul>
-<li>We can apply arrange-act-assert (AAA) pattern for this test and add more assertion. AAA is simple concept: setup context &ndash;> execute thing &ndash;> verify expected behavior.</li>
+<li>We can apply arrange-act-assert (AAA) pattern for this test and add more assertion. AAA is simple concept: setup context -> execute thing -> verify expected behavior.</li>
 <li>Tell controller example to render view using <strong>render_views</strong> method and add more assertion with view.</li>
 </ul>
 
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span><span class="p">,</span> <span class="ss">:focus</span> <span class="k">do</span>
-</span><span class='line'>    <span class="n">render_views</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1"># arrange</span>
-</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:published_book</span><span class="p">){</span> <span class="n">create</span> <span class="ss">:book</span><span class="p">,</span> <span class="ss">:published</span> <span class="p">}</span>
-</span><span class='line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:unpublished_book</span><span class="p">){</span> <span class="n">create</span> <span class="ss">:book</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1"># act</span>
-</span><span class='line'>    <span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">get</span> <span class="ss">:index</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1"># assertion</span>
-</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;response ok &amp; render correct view&quot;</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span> <span class="ss">:ok</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">render_template</span> <span class="ss">:index</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;query latest published books&quot;</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">assigns</span><span class="p">(</span><span class="ss">:books</span><span class="p">))</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">it</span> <span class="s2">&quot;contain only published book title&quot;</span> <span class="k">do</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span><span class="o">.</span><span class="n">title</span>
-</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">not_to</span> <span class="kp">include</span> <span class="n">unpublished_book</span><span class="o">.</span><span class="n">title</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><figure class='code-highlight-figure'><div class='code-highlight'><pre class='code-highlight-pre'><div data-line='1' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="n">describe</span> <span class="no">BooksController</span><span class="p">,</span> <span class="ss">type</span><span class="p">:</span> <span class="ss">:controller</span> <span class="k">do</span>
+</div></div><div data-line='2' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="n">describe</span> <span class="s2">&quot;GET #index&quot;</span><span class="p">,</span> <span class="ss">:focus</span> <span class="k">do</span>
+</div></div><div data-line='3' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">render_views</span>
+</div></div><div data-line='4' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='5' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="c1"># arrange</span>
+</div></div><div data-line='6' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:published_book</span><span class="p">)&#x7b;</span> <span class="n">create</span> <span class="ss">:book</span><span class="p">,</span> <span class="ss">:published</span> <span class="p">&#x7d;</span>
+</div></div><div data-line='7' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">let!</span><span class="p">(</span><span class="ss">:unpublished_book</span><span class="p">)&#x7b;</span> <span class="n">create</span> <span class="ss">:book</span> <span class="p">&#x7d;</span>
+</div></div><div data-line='8' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='9' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="c1"># act</span>
+</div></div><div data-line='10' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">before</span> <span class="k">do</span>
+</div></div><div data-line='11' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">get</span> <span class="ss">:index</span>
+</div></div><div data-line='12' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">end</span>
+</div></div><div data-line='13' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='14' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="c1"># assertion</span>
+</div></div><div data-line='15' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">it</span> <span class="s2">&quot;response ok &amp; render correct view&quot;</span> <span class="k">do</span>
+</div></div><div data-line='16' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_http_status</span> <span class="ss">:ok</span>
+</div></div><div data-line='17' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">render_template</span> <span class="ss">:index</span>
+</div></div><div data-line='18' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">end</span>
+</div></div><div data-line='19' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='20' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">it</span> <span class="s2">&quot;query latest published books&quot;</span> <span class="k">do</span>
+</div></div><div data-line='21' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="n">assigns</span><span class="p">(</span><span class="ss">:books</span><span class="p">))</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span>
+</div></div><div data-line='22' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">end</span>
+</div></div><div data-line='23' class='code-highlight-row numbered'><div class='code-highlight-line'> </div></div><div data-line='24' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="n">it</span> <span class="s2">&quot;contain only published book title&quot;</span> <span class="k">do</span>
+</div></div><div data-line='25' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="kp">include</span> <span class="n">published_book</span><span class="o">.</span><span class="n">title</span>
+</div></div><div data-line='26' class='code-highlight-row numbered'><div class='code-highlight-line'>      <span class="n">expect</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">not_to</span> <span class="kp">include</span> <span class="n">unpublished_book</span><span class="o">.</span><span class="n">title</span>
+</div></div><div data-line='27' class='code-highlight-row numbered'><div class='code-highlight-line'>    <span class="k">end</span>
+</div></div><div data-line='28' class='code-highlight-row numbered'><div class='code-highlight-line'>  <span class="k">end</span>
+</div></div><div data-line='29' class='code-highlight-row numbered'><div class='code-highlight-line'><span class="k">end</span></div></div></pre></div></figure></p>
 
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">@sgt_mactavish</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-19T21:41:25+07:00" pubdate data-updated="true">Aug 19<span>th</span>, 2015</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/rspec/'>rspec</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/tdd/'>tdd</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/" data-via="sgt_mactavish" data-counturl="http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/" >Tweet</a>
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/07/11/elixir-functional-form/" title="Previous Post: Elixir Functional Form">&laquo; Elixir Functional Form</a>
-      
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/08/19/tightening-controller-test/">Tightening controller test</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/11/elixir-functional-form/">Elixir Functional Form</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/03/elixir-anonymous-function/">Elixir Anonymous Function</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/07/02/elixir-pattern-matching/">Elixir Pattern Matching</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/29/extra-slash-n-inside-rails-mailer-template/">Extra '\n' inside rails mailer template</a>
-      </li>
-    
-  </ul>
-</section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/brain64bit">@brain64bit</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'brain64bit',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 -  @sgt_mactavish <br/>
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> + <a href="https://github.com/ioveracker/mnml">mnml</a>.
-	  
-  </span>
-</p>
-
-</footer>
-  
-
-<script type="text/javascript">
-      var disqus_shortname = 'minified';
-      
+        </section>
+        <footer class="post-footer">
+          <section class="share">
+            
+              
+                <a class="icon-twitter" href="http://twitter.com/share?text=Tightening+controller+test&amp;url=http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test"
+                  onclick="window.open(this.href, 'twitter-share', 'width=550,height=255');return false;">
+                <i class="fa fa-twitter"></i><span class="hidden">twitter</span>
+                </a>
+              
+            
+              
+                <a class="icon-facebook" href="https://www.facebook.com/sharer.php?t=Tightening+controller+test&amp;u=http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test"
+                  onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+                <i class="fa fa-facebook"></i><span class="hidden">facebook</span>
+                </a>
+              
+            
+              
+            
+          </section>
+        </footer>
+        <div class="bottom-teaser cf">
+          <div class="isLeft">
+            <h5 class="index-headline featured"><span>Written by</span></h5>
+            <section class="author">
+              <div class="author-image" style="background-image: url(/assets/images/avatar.jpg)">Blog Logo</div>
+              <h4>Agung Prasetyo</h4>
+              <p class="bio"></p>
+              <hr>
+              <p class="published">Published <time datetime="2015-08-19 21:41">19 Aug 2015</time></p>
+            </section>
+          </div>
+          
+          <div class="isRight">
+            <h5 class="index-headline featured"><span>Supported by</span></h5>
+            <footer class="site-footer">
+              <section class="poweredby">Proudly published with <a href="http://jekyllrb.com"> Jekyll</a></section>
+              <a class="subscribe" href="/feed.xml"> <span class="tooltip"> <i class="fa fa-rss"></i> You should subscribe to my feed.</span></a>
+              <div class="inner">
+                <section class="copyright">All content copyright <a href="/">Agung Prasetyo</a> &copy; 2016<br>All rights reserved.</section>
+              </div>
+            </footer>
+          </div>
+        </div>
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/';
-        var disqus_url = 'http://brain64bit.github.io/blog/2015/08/19/tightening-controller-test/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'minified'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        
+      </article>
+    </main>
+    <div class="bottom-closer">
+      <div class="background-closer-image"  style="background-image: url(/assets/images/1.jpg)">
+        Image
+      </div>
+      <div class="inner">
+        <h1 class="blog-title">devblog of @sgt_mactavish</h1>
+        <h2 class="blog-description"></h2>
+        <a href="/" class="btn">Back to Overview</a>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+<script type="text/javascript" src="/assets/js/index.js"></script>
+<script type="text/javascript" src="/assets/js/readingTime.min.js"></script>
+<script>
+(function ($) {
+  "use strict";
+  $(document).ready(function(){
+
+    var $window = $(window),
+    $image = $('.post-image-image, .teaserimage-image');
+    
+      $window.on('scroll', function() {
+        var top = $window.scrollTop();
+
+        if (top < 0 || top > 1500) { return; }
+        $image
+          .css('transform', 'translate3d(0px, '+top/3+'px, 0px)')
+          .css('opacity', 1-Math.max(top/700, 0));
+      });
+      $window.trigger('scroll');
+
+      var height = $('.article-image').height();
+      $('.post-content').css('padding-top', height + 'px');
+
+      $('a[href*=#]:not([href=#])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+         && location.hostname == this.hostname) {
+          var target = $(this.hash);
+          target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+          if (target.length) {
+            $('html,body').animate({ scrollTop: target.offset().top }, 500);
+            return false;
+          }
+        }
+      });
+
+  });
+}(jQuery));
 </script>
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>

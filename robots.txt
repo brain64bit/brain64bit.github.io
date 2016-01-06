@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://brain64bit.github.io/sitemap.xml 
